@@ -4,4 +4,10 @@
 
     * **Bubbles** will be rendered inside a square of canva. 
 
-    ![Bubbles, wirephrame](/images/wirephrame.jpg)
+    ![Bubbles, wireframe](/images/wirephrame.jpg)
+
+    ## MVP's
+    1. Create Repo, MD, install webpack and dependancies
+    2. Render Wirefram of site
+    3. Build Game
+    4. Write Production Readme
