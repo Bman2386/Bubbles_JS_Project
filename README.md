@@ -15,3 +15,6 @@
         - 3 Days
     4. Write Production Readme
         - 1/2 Day
+    5. Bonus
+        * music and sound effects
+        * Customize Bubble
