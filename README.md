@@ -8,6 +8,10 @@
 
     ## MVP's
     1. Create Repo, MD, install webpack and dependancies
+        - 1/2 day
     2. Render Wirefram of site
+        - 1 day
     3. Build Game
+        - 3 Days
     4. Write Production Readme
+        - 1/2 Day
