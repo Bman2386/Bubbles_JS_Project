@@ -12,6 +12,7 @@
     2. Render Wirefram of site
         - 1 day
     3. Build Game
+        -Obstacles to pop your bubble will appear with greater frequency as time goes on, but fear not! Your bubble will be able to gain life and shoot things to destroy obsticles in your way!
         - 3 Days
     4. Write Production Readme
         - 1/2 Day

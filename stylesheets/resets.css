@@ -12,3 +12,11 @@ header, footer, nav, ul, li, button, img, input, a {
     list-style: none;
     text-decoration: none;
 }
+
+#myCanvas {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+    height: 50%;
+    background-color: blue;
+}
