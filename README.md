@@ -19,3 +19,8 @@
     5. Bonus
         * music and sound effects
         * Customize Bubble
+
+    ## tech used
+    * webpack
+
+(npm run webpack --mode=development)

@@ -2,9 +2,8 @@ html, body, div, span, h1, h2, h3,
 header, footer, nav, ul, li, button, img, input, a {
     padding: 0;
     margin: 0;
-    font-family: inherit;
     border: 0;
-    color: rgb(81, 182, 81);
+    color: inherit;
     background-color: white;
     font-size: medium;
     font-family: Arial, sans-serif;
@@ -13,10 +12,3 @@ header, footer, nav, ul, li, button, img, input, a {
     text-decoration: none;
 }
 
-#myCanvas {
-    padding: 0;
-    margin: 0;
-    width: 50%;
-    height: 50%;
-    background-color: blue;
-}
