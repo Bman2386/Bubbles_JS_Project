@@ -1,5 +1,6 @@
 import Bubble from './bubble'
 import Clip from './clip'
+import Ups from './ups'
 
 export default class Game {
     constructor(canvas) {
@@ -8,6 +9,7 @@ export default class Game {
         this.canvasHeight = canvas.height;
         this.bubble = new Bubble(this.canvasWidth, this.canvasHeight);
         this.clip = new Clip(this.canvasWidth, this.canvasHeight);
+        this.ups = new Ups(this.canvasWidth, this.canvasHeight)
 
         this.playing = false;
         // this.soundOn = true;
@@ -34,26 +36,47 @@ export default class Game {
         this.bubble.bubbleY = 100;
         this.bubble.bubbleHealth = 1
         this.bubble.drawBubble(this.bubble.ctx);
-        this.clip.drawClip(this.clip.ctx)
+        // this.clip.drawClip(this.clip.ctx)
+        // this.ups.drawBubbles(this.ups.ctx)
         this.gameUpdate();
     }
 
 
     detectClipCollision(clip) {
-        // const {clip} = this.clip
-        const clipCenterX = ((clip.clipX + (clip.clipX + clip.clipWidth)) /2);
-        const clipCenterY = ((clip.clipY + (clip.clipY + clip.clipHeight)) /2);
+        const clipTop = ((clip.clipY))
+        const clipBottom = ((clip.clipY + clip.clipHeight));
+        const clipLeft = ((clip.clipX))
+        const clipRight = ((clip.clipX + clip.clipWidth));
+
         const bubbleTop = ((this.bubble.bubbleY));
         const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
         const bubbleLeft = ((this.bubble.bubbleX));
         const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
 
-        if (((clipCenterX > bubbleLeft) && (clipCenterX < bubbleRight)) &&
-            ((clipCenterY > bubbleTop) && (clipCenterY < bubbleBottom))) {
+        if ((clipLeft < bubbleRight && clipRight > bubbleLeft) &&
+        (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
             this.bubble.bubbleHealth -= 1;
         }
        
     }
+
+    detectBubblesCollision(bubbles){
+        const bubblesTop = ((bubbles.bubblesY))
+        const bubblesBottom = ((bubbles.bubblesY + bubbles.bubblesHeight));
+        const bubblesLeft = ((bubbles.bubblesX))
+        const bubblesRight = ((bubbles.bubblesX + bubbles.bubblesWidth));
+        
+        const bubbleTop = ((this.bubble.bubbleY));
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
+        const bubbleLeft = ((this.bubble.bubbleX));
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+
+        if ((bubblesLeft <= bubbleRight && bubblesRight >= bubbleLeft) &&
+         (bubblesTop <= bubbleBottom && bubblesBottom >= bubbleTop)) {
+            this.bubble.bubbleHealth = 2;
+        }
+    }
+
     gameUpdate() {
         if (this.playing === true) {
             this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -62,12 +85,12 @@ export default class Game {
             this.bubble.drawBubble(this.ctx);
             
             this.clip.drawClip(this.ctx)
-
+            this.ups.drawBubbles(this.ctx)
             // this.frameO += 1;
             // this.frameH += 1;
             // this.frameC += 1;
             this.detectClipCollision(this.clip)
-
+            this.detectBubblesCollision(this.ups)
             if (this.gameOver()) {
                 this.endGame(this.ctx);
             }
@@ -91,6 +114,10 @@ export default class Game {
         this.playing = false;
         const img = new Image();
         img.src = '../images/Game_Over.png'
-        ctx.drawImage(img, 250, 450, 300, 300)
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0, 900, 500)
+        }
     }
+
+    
 }
