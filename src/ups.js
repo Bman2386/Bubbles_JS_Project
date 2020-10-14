@@ -17,10 +17,15 @@ export default class Ups {
         this.bubblesSrc = "../images/bubbles.jpg";
     }
 
-    drawBubbles(ctx) {
+    drawBubbles(ctx, deadX, deadY) {
         const img = new Image();
         img.src = this.bubblesSrc;
         ctx.drawImage(img, this.bubblesX, this.bubblesY, this.bubblesHeight, this.bubblesWidth)
+        this.move(deadX, deadY)
     }
 
+    move(deadX, deadY) {
+        this.bubblesX = deadX;
+        this.bubblesY = deadY;
+    }
 }

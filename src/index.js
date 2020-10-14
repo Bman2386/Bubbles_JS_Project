@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     button.addEventListener('click', e => {
         game.restart();
     });
+
 })
 
   
