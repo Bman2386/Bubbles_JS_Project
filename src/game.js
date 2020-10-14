@@ -1,8 +1,9 @@
 import Bubble from './bubble';
 import Clip from './clip';
 import Ups from './ups';
-import Bird from './bird'
-import Cloud from './cloud'
+import Bird from './bird';
+import Cloud from './cloud';
+import Poop from './poop'
 
 export default class Game {
     constructor(canvas) {
@@ -10,28 +11,27 @@ export default class Game {
         this.canvasWidth = canvas.width;
         this.canvasHeight = canvas.height;
         this.bubble = new Bubble(this.canvasWidth, this.canvasHeight);
-        this.clip = new Clip(this.canvasWidth, this.canvasHeight);
-        // this.ups = new Ups(this.canvasWidth, this.canvasHeight)
 
         this.birds = [];
         let bird = new Bird;
         this.birds.push(bird)
 
         this.clouds = [];
-        let cloud = new Cloud;
 
         this.ups = [];
-        let up = new Ups
-        
+
+        this.clips = [];
+        this.poops = [];
+
         this.deadX 
         this.deadY
 
         this.frameB = 0;
         this.frameC = 0;
+        this.frameP = 0;
 
         this.playing = false;
         // this.soundOn = true;
-        this.score = 0;
 
         this.gameOver = this.gameOver.bind(this);
         this.gameUpdate = this.gameUpdate.bind(this);
@@ -54,9 +54,8 @@ export default class Game {
         this.bubble.bubbleY = 100;
         this.bubble.bubbleHealth = 2;
         this.bubble.score = 0;
+        this.clips = [];
         this.bubble.drawBubble(this.bubble.ctx);
-        // this.clip.drawClip(this.clip.ctx)
-        // this.ups.drawBubbles(this.ups.ctx)
         this.gameUpdate();
     }
 
@@ -75,6 +74,7 @@ export default class Game {
         if ((clipLeft < bubbleRight && clipRight > bubbleLeft) &&
         (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
             this.bubble.bubbleHealth -= 1;
+            this.clips.shift()
         }
     }
 
@@ -102,6 +102,31 @@ export default class Game {
        }
     }
 
+    detectPoopCollision(poop) {
+        const poopTop = ((poop.poopY))
+        const poopBottom = ((poop.poopY + poop.poopHeight));
+        const poopLeft = ((poop.poopX))
+        const poopRight = ((poop.poopX + poop.poopWidth));
+
+        const bubbleTop = ((this.bubble.bubbleY));
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
+        const bubbleLeft = ((this.bubble.bubbleX));
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+        
+        if ((poopLeft < bubbleRight && poopRight > bubbleLeft) &&
+        (poopTop < bubbleBottom && poopBottom > bubbleTop)) {
+            this.deadX = poop.poopX
+            this.deadY = poop.poopY
+            this.clouds.push(new Cloud);
+            this.poops.shift();
+            this.bubble.bubbleHealth -= 1;
+        }
+       if (poop.poopY > 500) {
+           this.poops.shift();
+           this.clips.push(new Clip)
+       }
+    }
+
     detectBubblesCollision(bubbles){
         const bubblesTop = ((bubbles.bubblesY))
         const bubblesBottom = ((bubbles.bubblesY + bubbles.bubblesHeight));
@@ -120,6 +145,18 @@ export default class Game {
         }
     }
 
+    pooping(bird) {
+        let tempX;
+        let tempY;
+        if (this.frameP > 15) {
+                tempX = bird.birdX;
+                tempY = bird.birdY;
+                this.poops.push(new Poop)
+                this.poops[this.poops.length - 1].start(tempX, tempY)
+                this.frameP = 0
+            }
+    }
+
     gameUpdate() {
         if (this.playing === true) {
             this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -127,12 +164,15 @@ export default class Game {
             this.bubble.newPos();
             this.bubble.drawBubble(this.ctx);
             
-            this.clip.drawClip(this.ctx)
 
             this.frameB += 1;
 
+            this.clips.forEach(clip => {
+                clip.drawClip(this.ctx)
+            })
             this.birds.forEach(bird => {
                 bird.drawBird(this.ctx)
+                this.pooping(bird);
             })
 
             this.clouds.forEach(cloud => {
@@ -143,13 +183,22 @@ export default class Game {
                 up.drawBubbles(this.ctx, this.deadX, this.deadY)
             })
 
-            if (this.frameB > 100) {
+            this.poops.forEach(poop => {
+                poop.drawPoop(this.ctx)
+            })
+
+            if (this.frameB > 75) {
                 this.birds.push(new Bird);
                 this.frameB = 0;
             }
+            if (this.birds.length > 0) {
+                this.frameP += 1;
+            }
+
+           
 
             if (this.clouds.length > 0) {
-                this.frameC += 1
+                this.frameC += 1;
             }
 
             if (this.frameC > 25) {
@@ -159,12 +208,18 @@ export default class Game {
             }
             // this.frameH += 1;
             // this.frameC += 1;
-            this.detectClipCollision(this.clip)
+            this.clips.forEach(clip => {
+                this.detectClipCollision(clip)
+            })
             this.birds.forEach(bird => {
                 this.detectBirdCollision(bird)
             })
             this.ups.forEach(up => {
                 this.detectBubblesCollision(up)
+            })
+
+            this.poops.forEach(poop => {
+                this.detectPoopCollision(poop)
             })
             
             if (this.gameOver()) {
@@ -178,7 +233,7 @@ export default class Game {
 
     updateScore() {
         // document.getElementById('score')
-        this.bubble.score += 1;
+        this.bubble.score += 0.01558;
         this.scoreCount.innerText = `Score: ${this.bubble.score}`;
     }
 

@@ -9,8 +9,8 @@ export default class Clip {
         this.clipHeight = 25;
         this.clipWidth = 25;
 
-        this.clipX = 400;
-        this.clipY = 150;
+        this.clipX = Math.floor(Math.random() * Math.floor(900) );
+        this.clipY = Math.floor(Math.random() * Math.floor(500) );
 
         this.drawClip = this.drawClip.bind(this);
 
