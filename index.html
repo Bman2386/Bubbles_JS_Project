@@ -8,16 +8,26 @@
 </head>
 <body >
         <h1 class='title'>Bubbles!</h1>
-        <button>New Game</button>
-    <ul class=controller> Controlls
-        <li>W=up</li>
-        <li>A=left</li>
-        <li>S=down</li>
-        <li>D=right</li>
-        <li>space=fire</li>
-    </ul>
-    <div class='score'>Score</div>
-    <canvas id="myCanvas"></canvas>
+        <div class="container">
+            <canvas id="myCanvas" height="500" width="900"></canvas>
+            <div class="display-right">
+                <div class='score'>Score</div>
+                <button class="button" id="new-game">New Game</button>
+                <div class=controller> Controlls
+                    <div class="button">W=up</div>
+                    <div class="but">
+                        <div class="button">A=left</div>
+                        <div class="button">S=down</div>
+                        <div class="button">D=right</div>
+                    </div>
+                    <div class="button">space=fire</div>
+                </div>     
+            </div>
+        </div> 
+    <footer>
+        <a href="https://github.com/Bman2386">github</a>
+    </footer>
     <script type="application/javascript" src="./dist/main.js"></script>
-</body>
+</body> 
+
 </html>
