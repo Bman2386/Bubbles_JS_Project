@@ -42,10 +42,17 @@ export default class Bubble {
         if (bubbleHealth === 2) {
             this.bubbleHeight = 50;
             this.bubbleWidth = 50;
+            this.imgSrc = "../images/bubble.png";
         } else if (bubbleHealth === 1) {
             this.bubbleHeight = 20;
             this.bubbleWidth = 20;
+            this.imgSrc = "../images/bubble.png";
+        } else if (bubbleHealth > 2) {
+            this.bubbleHeight = 50;
+            this.bubbleWidth = 50;
+            this.imgSrc = "../images/shield.jpg"
         }
+
     }
 
     newPos() {

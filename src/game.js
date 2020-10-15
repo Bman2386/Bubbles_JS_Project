@@ -3,7 +3,9 @@ import Clip from './clip';
 import Ups from './ups';
 import Bird from './bird';
 import Cloud from './cloud';
-import Poop from './poop'
+import Poop from './poop';
+import Shield from './shield';
+import Boss from "./boss"
 
 export default class Game {
     constructor(canvas) {
@@ -11,17 +13,14 @@ export default class Game {
         this.canvasWidth = canvas.width;
         this.canvasHeight = canvas.height;
         this.bubble = new Bubble(this.canvasWidth, this.canvasHeight);
+        this.boss = new Boss
 
         this.birds = [];
-        let bird = new Bird;
-        this.birds.push(bird)
-
         this.clouds = [];
-
         this.ups = [];
-
         this.clips = [];
         this.poops = [];
+        this.shield = [];
 
         this.deadX 
         this.deadY
@@ -29,7 +28,10 @@ export default class Game {
         this.frameB = 0;
         this.frameC = 0;
         this.frameP = 0;
+        this.frameS = 0;
+        this.frameX = 0;
 
+        this.win = false;
         this.playing = false;
         // this.soundOn = true;
 
@@ -40,7 +42,6 @@ export default class Game {
 
         this.scoreCount = document.getElementById("score");
         this.updateScore = this.updateScore.bind(this);
-        // this.updateFrameNav = this.updateFrameNav.bind(this);
     }
 
     restart() {
@@ -48,13 +49,15 @@ export default class Game {
             cancelAnimationFrame(this.frameId)
         }
 
-        this.playing = true
-
+        this.playing = true;
+        this.win = false;
         this.bubble.bubbleX = 200;
         this.bubble.bubbleY = 100;
         this.bubble.bubbleHealth = 2;
+        this.boss.bossHealth = 20
         this.bubble.score = 0;
         this.clips = [];
+        this.shields = [];
         this.bubble.drawBubble(this.bubble.ctx);
         this.gameUpdate();
     }
@@ -102,6 +105,27 @@ export default class Game {
        }
     }
 
+    detectBossCollision(boss) {
+        const bossTop = ((boss.bossY))
+        const bossBottom = ((boss.bossY + boss.bossHeight));
+        const bossLeft = ((boss.bossX))
+        const bossRight = ((boss.bossX + boss.bossWidth));
+
+        const bubbleTop = ((this.bubble.bubbleY));
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
+        const bubbleLeft = ((this.bubble.bubbleX));
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+
+        if ((bossLeft < bubbleRight && bossRight > bubbleLeft) &&
+        (bossTop < bubbleBottom && bossBottom > bubbleTop)) {
+            this.bubble.bubbleHealth -= 1;
+            boss.bossHealth -= 1;
+            if (boss.bossHealth < 0) {
+                this.win = true
+            }
+        }
+    }
+
     detectPoopCollision(poop) {
         const poopTop = ((poop.poopY))
         const poopBottom = ((poop.poopY + poop.poopHeight));
@@ -117,7 +141,6 @@ export default class Game {
         (poopTop < bubbleBottom && poopBottom > bubbleTop)) {
             this.deadX = poop.poopX
             this.deadY = poop.poopY
-            this.clouds.push(new Cloud);
             this.poops.shift();
             this.bubble.bubbleHealth -= 1;
         }
@@ -140,8 +163,31 @@ export default class Game {
 
         if ((bubblesLeft <= bubbleRight && bubblesRight >= bubbleLeft) &&
          (bubblesTop <= bubbleBottom && bubblesBottom >= bubbleTop)) {
-            this.bubble.bubbleHealth = 2;
+            this.bubble.bubbleHealth += 1;
+            this.bubble.score += 5;
             this.ups.shift()
+        }
+    }
+
+    detectShieldCollision(shield){
+        const shieldTop = ((shield.shieldY))
+        const shieldBottom = ((shield.shieldY + shield.shieldHeight));
+        const shieldLeft = ((shield.shieldX))
+        const shieldRight = ((shield.shieldX + shield.shieldWidth));
+        
+        const bubbleTop = ((this.bubble.bubbleY));
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
+        const bubbleLeft = ((this.bubble.bubbleX));
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+
+        if ((shieldLeft <= bubbleRight && shieldRight >= bubbleLeft) &&
+         (shieldTop <= bubbleBottom && shieldBottom >= bubbleTop)) {
+            this.bubble.bubbleHealth +=10;
+            this.bubble.score += 50;
+            this.shields.shift()
+        }
+        if (shield.shieldY > 500) {
+            this.shields.shift();
         }
     }
 
@@ -163,9 +209,22 @@ export default class Game {
 
             this.bubble.newPos();
             this.bubble.drawBubble(this.ctx);
-            
 
+            this.frameS += 1;
             this.frameB += 1;
+            // if (this.bubble.score < 50) {
+                
+            // } else {
+            //     this.frameX += 1
+            //     this.frameB = 0
+            // }
+           
+            if (this.bubble.score > 50) {
+                // this.boss.health = 50
+                this.boss.bossMove()
+                this.boss.drawBoss(this.ctx)
+                this.detectBossCollision(this.boss);
+            }
 
             this.clips.forEach(clip => {
                 clip.drawClip(this.ctx)
@@ -183,6 +242,10 @@ export default class Game {
                 up.drawBubbles(this.ctx, this.deadX, this.deadY)
             })
 
+            this.shields.forEach(shield =>{
+                shield.drawShield(this.ctx)
+            })
+
             this.poops.forEach(poop => {
                 poop.drawPoop(this.ctx)
             })
@@ -195,8 +258,6 @@ export default class Game {
                 this.frameP += 1;
             }
 
-           
-
             if (this.clouds.length > 0) {
                 this.frameC += 1;
             }
@@ -206,22 +267,35 @@ export default class Game {
                 this.ups.push(new Ups)
                 this.frameC = 0
             }
-            // this.frameH += 1;
-            // this.frameC += 1;
+
+            if (this.frameS > 100) {
+                this.shields.push(new Shield)
+                this.frameS = 0;
+            }
+           
+            
+
             this.clips.forEach(clip => {
-                this.detectClipCollision(clip)
+                this.detectClipCollision(clip);
             })
             this.birds.forEach(bird => {
-                this.detectBirdCollision(bird)
+                this.detectBirdCollision(bird);
             })
             this.ups.forEach(up => {
-                this.detectBubblesCollision(up)
+                this.detectBubblesCollision(up);
+            })
+
+            this.shields.forEach(shield => {
+                this.detectShieldCollision(shield);
             })
 
             this.poops.forEach(poop => {
-                this.detectPoopCollision(poop)
+                this.detectPoopCollision(poop);
             })
             
+            if (this.win) {
+                this.winScreen(this.ctx)
+            }
             if (this.gameOver()) {
                 this.endGame(this.ctx);
             }
@@ -237,9 +311,19 @@ export default class Game {
         this.scoreCount.innerText = `Score: ${this.bubble.score}`;
     }
 
+    winScreen(ctx){
+        this.playing = false;
+        const img = new Image();
+        img.src = '../images/youwin.png'
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0, 900, 500)
+        }
+    }
+
     gameOver() {
+        debugger
         if (this.bubble.bubbleHealth < 1) {
-            // this.scoreCount.innerText = `Score: 0`;
+            // this.scoreCount.innerText = `You WIN!!! Score: ${this.bubble.score}`;
             return true;
         }
         return false;
