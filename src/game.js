@@ -31,6 +31,7 @@ export default class Game {
         this.frameS = 0;
         this.frameX = 0;
 
+        this.protected = false;
         this.win = false;
         this.playing = false;
         // this.soundOn = true;
@@ -76,7 +77,9 @@ export default class Game {
 
         if ((clipLeft < bubbleRight && clipRight > bubbleLeft) &&
         (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
-            this.bubble.bubbleHealth -= 1;
+            if (this.protected === false) {
+                this.bubble.bubbleHealth -= 1;
+            }
             this.clips.shift()
         }
     }
@@ -98,7 +101,9 @@ export default class Game {
             this.deadY = bird.birdY
             this.clouds.push(new Cloud);
             this.birds.shift();
-            this.bubble.bubbleHealth -= 1;
+            if (this.protected === false) {
+                this.bubble.bubbleHealth -= 1;
+            }
         }
        if (bird.birdX > 800) {
            this.birds.shift();
@@ -118,7 +123,9 @@ export default class Game {
 
         if ((bossLeft < bubbleRight && bossRight > bubbleLeft) &&
         (bossTop < bubbleBottom && bossBottom > bubbleTop)) {
-            this.bubble.bubbleHealth -= 1;
+            if (this.protected === false) {
+                this.bubble.bubbleHealth -= 1;
+            }
             boss.bossHealth -= 1;
             if (boss.bossHealth < 0) {
                 this.win = true
@@ -142,7 +149,9 @@ export default class Game {
             this.deadX = poop.poopX
             this.deadY = poop.poopY
             this.poops.shift();
-            this.bubble.bubbleHealth -= 1;
+            if (this.protected === false) {
+                this.bubble.bubbleHealth -= 1;
+            }
         }
        if (poop.poopY > 500) {
            this.poops.shift();
@@ -166,6 +175,7 @@ export default class Game {
             this.bubble.bubbleHealth += 1;
             this.bubble.score += 5;
             this.ups.shift()
+            
         }
     }
 
@@ -182,9 +192,11 @@ export default class Game {
 
         if ((shieldLeft <= bubbleRight && shieldRight >= bubbleLeft) &&
          (shieldTop <= bubbleBottom && shieldBottom >= bubbleTop)) {
-            this.bubble.bubbleHealth +=10;
+            this.bubble.bubbleHealth = 3;
             this.bubble.score += 50;
             this.shields.shift()
+            this.protected = true;
+            this.frameX = 0;
         }
         if (shield.shieldY > 500) {
             this.shields.shift();
@@ -218,8 +230,11 @@ export default class Game {
             //     this.frameX += 1
             //     this.frameB = 0
             // }
-           
-            if (this.bubble.score > 50) {
+           if (this.protected) {
+               this.frameX += 1
+           }
+
+            if (this.bubble.score > 500) {
                 // this.boss.health = 50
                 this.boss.bossMove()
                 this.boss.drawBoss(this.ctx)
@@ -273,7 +288,11 @@ export default class Game {
                 this.frameS = 0;
             }
            
-            
+            if (this.frameX > 400) {
+                this.protected = false;
+                this.bubble.bubbleHealth = 2;
+                this.frameX = 0
+            }
 
             this.clips.forEach(clip => {
                 this.detectClipCollision(clip);

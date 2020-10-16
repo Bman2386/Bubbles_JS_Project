@@ -47,7 +47,7 @@ export default class Bubble {
             this.bubbleHeight = 20;
             this.bubbleWidth = 20;
             this.imgSrc = "../images/bubble.png";
-        } else if (bubbleHealth > 2) {
+        } else if (bubbleHealth === 3) {
             this.bubbleHeight = 50;
             this.bubbleWidth = 50;
             this.imgSrc = "../images/shield.jpg"
