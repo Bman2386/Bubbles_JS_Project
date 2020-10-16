@@ -16,7 +16,7 @@ export default class Boss {
         this.bossX = 200;
         this.bossY = 75;
         
-        this.imgSrc = "../images/spaceship.jpg"
+        this.imgSrc = "./images/spaceship.jpg"
 
         this.drawBoss = this.drawBoss.bind(this)
 

@@ -12,7 +12,7 @@ export default class Poop {
             this.poopX 
             this.poopY 
     
-            this.poopSrc = '../images/poop.jpg';
+            this.poopSrc = './images/poop.jpg';
             this.drawPoop = this.drawPoop.bind(this)
         }
         drawPoop(ctx) {

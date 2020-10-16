@@ -19,7 +19,7 @@ export default class Bubble {
 
         this.score = 0;
 
-        this.imgSrc = "../images/bubble.png";
+        this.imgSrc = "./images/bubble.png";
 
         this.drawBubble = this.drawBubble.bind(this);
         this.moveBubble = this.moveBubble.bind(this)
@@ -42,15 +42,15 @@ export default class Bubble {
         if (bubbleHealth === 2) {
             this.bubbleHeight = 50;
             this.bubbleWidth = 50;
-            this.imgSrc = "../images/bubble.png";
+            this.imgSrc = "./images/bubble.png";
         } else if (bubbleHealth === 1) {
             this.bubbleHeight = 20;
             this.bubbleWidth = 20;
-            this.imgSrc = "../images/bubble.png";
+            this.imgSrc = "./images/bubble.png";
         } else if (bubbleHealth === 3) {
             this.bubbleHeight = 50;
             this.bubbleWidth = 50;
-            this.imgSrc = "../images/shield.jpg"
+            this.imgSrc = "./images/shield.jpg"
         }
 
     }

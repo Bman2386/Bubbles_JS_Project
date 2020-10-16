@@ -1,4 +1,4 @@
-
+import birdImg from "./images/bird.jpg"
 
 export default class Enemy {
     constructor(canvasWidth, canvasHeight) {
@@ -19,7 +19,7 @@ export default class Enemy {
 
     drawBird(ctx) {
         const img = new Image();
-        img.src = "../images/bird.jpg";
+        img.src = birdImg;
         ctx.drawImage(img, this.birdX, this.birdY, this.birdWidth, this.birdHeight);
         this.birdX += 7
     }

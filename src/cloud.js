@@ -16,7 +16,7 @@ export default class Cloud {
 
     drawCloud(ctx, deadX, deadY){
         const img = new Image();
-        img.src = '../images/cloud.jpg'
+        img.src = './images/cloud.jpg'
         ctx.drawImage(img, this.cloudX, this.cloudY, this.cloudWidth, this.cloudHeight)
         this.move(deadX, deadY)
     }

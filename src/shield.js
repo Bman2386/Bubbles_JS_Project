@@ -15,7 +15,7 @@ export default class Shield {
 
         this.drawShield = this.drawShield.bind(this);
 
-        this.imgSrc = "../images/shield.jpg"
+        this.imgSrc = "./images/shield.jpg"
     }
 
     drawShield(ctx) {

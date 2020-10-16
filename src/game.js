@@ -333,14 +333,14 @@ export default class Game {
     winScreen(ctx){
         this.playing = false;
         const img = new Image();
-        img.src = '../images/youwin.png'
+        img.src = './images/youwin.png'
         img.onload = function() {
             ctx.drawImage(img, 0, 0, 900, 500)
         }
     }
 
     gameOver() {
-        debugger
+        // debugger
         if (this.bubble.bubbleHealth < 1) {
             // this.scoreCount.innerText = `You WIN!!! Score: ${this.bubble.score}`;
             return true;
@@ -351,7 +351,7 @@ export default class Game {
     endGame(ctx){
         this.playing = false;
         const img = new Image();
-        img.src = '../images/Game_Over.png'
+        img.src = './images/Game_Over.png'
         img.onload = function() {
             ctx.drawImage(img, 0, 0, 900, 500)
         }

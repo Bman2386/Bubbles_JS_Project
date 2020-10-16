@@ -14,7 +14,7 @@ export default class Clip {
 
         this.drawClip = this.drawClip.bind(this);
 
-        this.imgSrc = "../images/paperclip.png";
+        this.imgSrc = "./images/paperclip.png";
     }
 
     drawClip(ctx) {

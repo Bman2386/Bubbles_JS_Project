@@ -14,7 +14,7 @@ export default class Ups {
 
         this.drawBubbles = this.drawBubbles.bind(this)
 
-        this.bubblesSrc = "../images/bubbles.jpg";
+        this.bubblesSrc = "./images/bubbles.jpg";
     }
 
     drawBubbles(ctx, deadX, deadY) {
