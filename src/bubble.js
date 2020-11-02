@@ -10,7 +10,7 @@ export default class Bubble {
         this.bubbleWidth = 20;
         this.bubbleHeight = 20;
 
-        this.bubbleHealth = 2;
+        this.bubbleHealth = 20;
 
         this.bubbleX = 200;
         this.bubbleY = 100;
@@ -43,11 +43,11 @@ export default class Bubble {
             this.bubbleHeight = 50;
             this.bubbleWidth = 50;
             this.imgSrc = "./images/bubble.png";
-        } else if (bubbleHealth === 1) {
+        } else if (bubbleHealth < 2) {
             this.bubbleHeight = 20;
             this.bubbleWidth = 20;
             this.imgSrc = "./images/bubble.png";
-        } else if (bubbleHealth === 3) {
+        } else if (bubbleHealth > 30) {
             this.bubbleHeight = 50;
             this.bubbleWidth = 50;
             this.imgSrc = "./images/shield.jpg"

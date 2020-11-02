@@ -52,13 +52,16 @@ export default class Game {
 
         this.playing = true;
         this.win = false;
-        this.bubble.bubbleX = 200;
-        this.bubble.bubbleY = 100;
+        this.bubble.bubbleX = 450;
+        this.bubble.bubbleY = 200;
         this.bubble.bubbleHealth = 2;
-        this.boss.bossHealth = 20
+        this.boss.bossHealth = 300
         this.bubble.score = 0;
         this.clips = [];
         this.shields = [];
+        this.birds = [];
+        this.poops = [];
+        this.ups = [];
         this.bubble.drawBubble(this.bubble.ctx);
         this.gameUpdate();
     }
@@ -74,13 +77,14 @@ export default class Game {
         const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
         const bubbleLeft = ((this.bubble.bubbleX));
         const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+        const idx = this.clips.indexOf(clip)
 
         if ((clipLeft < bubbleRight && clipRight > bubbleLeft) &&
         (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
+            this.clips.splice(idx, 1)
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1;
+                this.bubble.bubbleHealth -= 1
             }
-            this.clips.shift()
         }
     }
 
@@ -90,23 +94,25 @@ export default class Game {
         const birdLeft = ((bird.birdX))
         const birdRight = ((bird.birdX + bird.birdWidth));
 
-        const bubbleTop = ((this.bubble.bubbleY));
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
-        const bubbleLeft = ((this.bubble.bubbleX));
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
-        
+      
+        const bubbleTop = ((this.bubble.bubbleY + 20));
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight - 20));
+        const bubbleLeft = ((this.bubble.bubbleX + 20));
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth - 20))
+        const idx = this.birds.indexOf(bird)
+
         if ((birdLeft < bubbleRight && birdRight > bubbleLeft) &&
         (birdTop < bubbleBottom && birdBottom > bubbleTop)) {
+            this.birds.splice(idx, 1);
             this.deadX = bird.birdX
             this.deadY = bird.birdY
             this.clouds.push(new Cloud);
-            this.birds.shift();
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1;
+                this.bubble.bubbleHealth -= 1
             }
         }
-       if (bird.birdX > 800) {
-           this.birds.shift();
+       if (bird.birdX > 875) {
+        this.birds.splice(idx, 1);
        }
     }
 
@@ -116,18 +122,19 @@ export default class Game {
         const bossLeft = ((boss.bossX))
         const bossRight = ((boss.bossX + boss.bossWidth));
 
-        const bubbleTop = ((this.bubble.bubbleY));
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
-        const bubbleLeft = ((this.bubble.bubbleX));
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+        
+        const bubbleTop = ((this.bubble.bubbleY + 20));
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight - 20));
+        const bubbleLeft = ((this.bubble.bubbleX + 20));
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth - 20))
 
         if ((bossLeft < bubbleRight && bossRight > bubbleLeft) &&
         (bossTop < bubbleBottom && bossBottom > bubbleTop)) {
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1;
+                this.bubble.bubbleHealth -= 1
             }
             boss.bossHealth -= 1;
-            if (boss.bossHealth < 0) {
+            if (boss.bossHealth <= 0) {
                 this.win = true
             }
         }
@@ -139,22 +146,25 @@ export default class Game {
         const poopLeft = ((poop.poopX))
         const poopRight = ((poop.poopX + poop.poopWidth));
 
-        const bubbleTop = ((this.bubble.bubbleY));
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight));
-        const bubbleLeft = ((this.bubble.bubbleX));
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+        const bubbleTop = ((this.bubble.bubbleY + 20));
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight - 20));
+        const bubbleLeft = ((this.bubble.bubbleX + 20));
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth - 20))
+        const idx = this.poops.indexOf(poop)
         
         if ((poopLeft < bubbleRight && poopRight > bubbleLeft) &&
         (poopTop < bubbleBottom && poopBottom > bubbleTop)) {
-            this.deadX = poop.poopX
-            this.deadY = poop.poopY
-            this.poops.shift();
+            debugger
+            this.poops.splice(idx, 1);
+            this.deadX = poop.poopX;
+            this.deadY = poop.poopY;
+            
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1;
+                this.bubble.bubbleHealth -= 1
             }
         }
        if (poop.poopY > 500) {
-           this.poops.shift();
+        this.poops.splice(idx, 1);
            this.clips.push(new Clip)
        }
     }
@@ -172,10 +182,11 @@ export default class Game {
 
         if ((bubblesLeft <= bubbleRight && bubblesRight >= bubbleLeft) &&
          (bubblesTop <= bubbleBottom && bubblesBottom >= bubbleTop)) {
-            this.bubble.bubbleHealth += 1;
+
             this.bubble.score += 5;
             this.ups.shift()
-            
+            if(this.protected === false)
+            this.bubble.bubbleHealth = 2;
         }
     }
 
@@ -192,7 +203,7 @@ export default class Game {
 
         if ((shieldLeft <= bubbleRight && shieldRight >= bubbleLeft) &&
          (shieldTop <= bubbleBottom && shieldBottom >= bubbleTop)) {
-            this.bubble.bubbleHealth = 3;
+            this.bubble.bubbleHealth = 50;
             this.bubble.score += 50;
             this.shields.shift()
             this.protected = true;
@@ -216,6 +227,7 @@ export default class Game {
     }
 
     gameUpdate() {
+    
         if (this.playing === true) {
             this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
@@ -224,12 +236,7 @@ export default class Game {
 
             this.frameS += 1;
             this.frameB += 1;
-            // if (this.bubble.score < 50) {
-                
-            // } else {
-            //     this.frameX += 1
-            //     this.frameB = 0
-            // }
+            
            if (this.protected) {
                this.frameX += 1
            }
@@ -265,6 +272,7 @@ export default class Game {
                 poop.drawPoop(this.ctx)
             })
 
+
             if (this.frameB > 75) {
                 this.birds.push(new Bird);
                 this.frameB = 0;
@@ -288,7 +296,7 @@ export default class Game {
                 this.frameS = 0;
             }
            
-            if (this.frameX > 400) {
+            if (this.frameX > 300) {
                 this.protected = false;
                 this.bubble.bubbleHealth = 2;
                 this.frameX = 0
@@ -340,7 +348,7 @@ export default class Game {
     }
 
     gameOver() {
-        // debugger
+        // 
         if (this.bubble.bubbleHealth < 1) {
             // this.scoreCount.innerText = `You WIN!!! Score: ${this.bubble.score}`;
             return true;
