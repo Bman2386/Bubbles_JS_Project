@@ -158,6 +158,7 @@ export default class Game {
             this.poops.splice(idx, 1);
             this.deadX = poop.poopX;
             this.deadY = poop.poopY;
+            this.clouds.push(new Cloud);
             
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1
