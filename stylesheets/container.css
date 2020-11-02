@@ -62,5 +62,33 @@
 
 .display-right {
     left: 800px;
+}
 
+.linked {
+    /* padding-top: 1rem; */
+    height: 2rem;
+    width: 2rem;
+}
+footer {
+    display: flex;
+    /* justify-content: ; */
+    
+}
+
+footer a {
+    padding: 1rem;
+}
+.git {
+    height: 2rem;
+    width: 2rem;
+}
+
+.bubbles {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.folder {
+    height: 2.5rem;
+    width: 2rem;
 }
