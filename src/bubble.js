@@ -13,8 +13,8 @@ export default class Bubble {
 
         this.bubbleHealth = 20;
 
-        this.bubbleX = 200;
-        this.bubbleY = 100;
+        this.bubbleX = 450;
+        this.bubbleY = 200;
         this.dirX = 0;
         this.dirY = 0;
 
