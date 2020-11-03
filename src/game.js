@@ -5,7 +5,8 @@ import Bird from './bird';
 import Cloud from './cloud';
 import Poop from './poop';
 import Shield from './shield';
-import Boss from "./boss"
+import Boss from "./boss";
+import Sound from "./sound"
 
 export default class Game {
     constructor(canvas) {
@@ -34,7 +35,17 @@ export default class Game {
         this.protected = false;
         this.win = false;
         this.playing = false;
-        // this.soundOn = true;
+        this.soundOn = false;
+
+        this.winSound = new Sound("src/sounds/win.mp3");
+        this.loseSound = new Sound("src/sounds/lose.mp3");
+        this.fartSound = new Sound("src/sounds/fart.mp3");
+        this.upsSound = new Sound("src/sounds/ups.mp3");
+        this.birdSound = new Sound("src/sounds/bird.mp3");
+        this.deadSound = new Sound("src/sounds/dead.mp3");
+
+        this.gameMusic = new Sound("src/sounds/game.mp3")
+        this.bossMusic = new Sound("src/sounds/boss.mp3")
 
         this.gameOver = this.gameOver.bind(this);
         this.gameUpdate = this.gameUpdate.bind(this);
@@ -64,6 +75,7 @@ export default class Game {
         this.ups = [];
         this.bubble.drawBubble(this.bubble.ctx);
         this.gameUpdate();
+        this.soundOn = true;
     }
 
 
@@ -83,7 +95,10 @@ export default class Game {
         (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
             this.clips.splice(idx, 1)
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1
+                this.bubble.bubbleHealth -= 1;
+                this.bubble.sound.play();
+            } else {
+                this.deadSound.play();
             }
         }
     }
@@ -108,7 +123,10 @@ export default class Game {
             this.deadY = bird.birdY
             this.clouds.push(new Cloud);
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1
+                this.bubble.bubbleHealth -= 1;
+                this.bubble.sound.play();
+            } else {
+                this.deadSound.play();
             }
         }
        if (bird.birdX > 875) {
@@ -130,11 +148,12 @@ export default class Game {
 
         if ((bossLeft < bubbleRight && bossRight > bubbleLeft) &&
         (bossTop < bubbleBottom && bossBottom > bubbleTop)) {
+            this.fartSound.play()
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1
+                this.bubble.bubbleHealth -= 1;
             }
             boss.bossHealth -= 1;
-            if (boss.bossHealth <= 0) {
+            if (boss.bossHealth < 0) {
                 this.win = true
             }
         }
@@ -154,14 +173,16 @@ export default class Game {
         
         if ((poopLeft < bubbleRight && poopRight > bubbleLeft) &&
         (poopTop < bubbleBottom && poopBottom > bubbleTop)) {
-            debugger
             this.poops.splice(idx, 1);
             this.deadX = poop.poopX;
             this.deadY = poop.poopY;
             this.clouds.push(new Cloud);
-            
+
             if (this.protected === false) {
-                this.bubble.bubbleHealth -= 1
+                this.bubble.bubbleHealth -= 1;
+                this.bubble.sound.play();
+            } else {
+                this.deadSound.play();
             }
         }
        if (poop.poopY > 500) {
@@ -188,6 +209,7 @@ export default class Game {
             this.ups.shift()
             if(this.protected === false)
             this.bubble.bubbleHealth = 2;
+            this.upsSound.play();
         }
     }
 
@@ -209,9 +231,11 @@ export default class Game {
             this.shields.shift()
             this.protected = true;
             this.frameX = 0;
+            this.upsSound.play();
         }
         if (shield.shieldY > 500) {
             this.shields.shift();
+            
         }
     }
 
@@ -221,9 +245,9 @@ export default class Game {
         if (this.frameP > 15) {
                 tempX = bird.birdX;
                 tempY = bird.birdY;
-                this.poops.push(new Poop)
-                this.poops[this.poops.length - 1].start(tempX, tempY)
-                this.frameP = 0
+                this.poops.push(new Poop);
+                this.poops[this.poops.length - 1].start(tempX, tempY);
+                this.frameP = 0;
             }
     }
 
@@ -237,6 +261,11 @@ export default class Game {
 
             this.frameS += 1;
             this.frameB += 1;
+
+            if (this.soundOn) {
+                this.gameMusic.play();
+            }
+            
             
            if (this.protected) {
                this.frameX += 1
@@ -244,9 +273,11 @@ export default class Game {
 
             if (this.bubble.score > 500) {
                 // this.boss.health = 50
-                this.boss.bossMove()
+                this.boss.bossMove();
                 this.boss.drawBoss(this.ctx)
                 this.detectBossCollision(this.boss);
+                this.gameMusic.stop();
+                this.bossMusic.play();
             }
 
             this.clips.forEach(clip => {
@@ -276,6 +307,7 @@ export default class Game {
 
             if (this.frameB > 75) {
                 this.birds.push(new Bird);
+                this.birdSound.play();
                 this.frameB = 0;
             }
             if (this.birds.length > 0) {
@@ -323,9 +355,13 @@ export default class Game {
             
             if (this.win) {
                 this.winScreen(this.ctx)
+                this.gameMusic.stop();
+                this.bossMusic.stop();
             }
             if (this.gameOver()) {
                 this.endGame(this.ctx);
+                this.gameMusic.stop();
+                this.bossMusic.stop();
             }
             
             this.updateScore()
@@ -346,6 +382,7 @@ export default class Game {
         img.onload = function() {
             ctx.drawImage(img, 0, 0, 900, 500)
         }
+        this.winSound.play()
     }
 
     gameOver() {
@@ -364,6 +401,7 @@ export default class Game {
         img.onload = function() {
             ctx.drawImage(img, 0, 0, 900, 500)
         }
+        this.loseSound.play()
     }
 
     

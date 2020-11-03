@@ -39,4 +39,6 @@
     ## tech used
     * webpack
 
+    ## Sound Credits
+    * All sounds and music from  [storyblocks.com](https://www.storyblocks.com/)
 (npm start)

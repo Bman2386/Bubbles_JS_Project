@@ -1,3 +1,4 @@
+import Sound from "./sound";
 
 export default class Bubble {
     constructor(canvasWidth, canvasHeight) {
@@ -18,6 +19,8 @@ export default class Bubble {
         this.dirY = 0;
 
         this.score = 0;
+        this.sound = new Sound("src/sounds/pop.mp3")
+        this.boostSound = new Sound("src/sounds/boost.mp3")
 
         this.imgSrc = "./images/bubble.png";
 
@@ -95,6 +98,11 @@ export default class Bubble {
             case "down":
                 this.dirY = 2;
                 break;
+            case "boost":
+                this.boostSound.play()
+                this.dirX *= 5;
+                this.dirY *= 5;
+                break
         }
     };
 
@@ -108,7 +116,10 @@ export default class Bubble {
             this.moveBubble("up");
         } else if (e.key == "s" || e.key == "KeyS"){
             this.moveBubble("down")
+        } else if ((e.key == " " || e.key =="SpaceBar") && this.bubbleHealth > 30){
+            this.moveBubble("boost")
         }
+
     };
 
     keyUpHandler(e) {
@@ -121,6 +132,6 @@ export default class Bubble {
             this.moveBubble("none");
         } else if (e.key == "s" || e.key == "KeyS"){
             this.moveBubble("none")
-        }
+        } 
     };
 }
