@@ -26,6 +26,8 @@
     color: blue;
     display: flex;
     align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 .title{
@@ -192,11 +194,16 @@ p {
     margin-left: 8px;
 }
 
-h3 {
+.portfolio {
     display: flex;
     align-items: center;
     text-align: center;
     color: blue;
+    padding-left: 8px;
+}
+
+.portfolio:hover {
+    text-decoration: underline;
 }
 
 .instructions {
