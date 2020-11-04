@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const button = document.getElementById('new-game');
     button.addEventListener('click', e => {
+        e.preventDefault();
         game.restart();
     });
 
