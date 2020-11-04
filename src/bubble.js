@@ -61,7 +61,7 @@ export default class Bubble {
     newPos() {
         this.bubbleX += this.dirX;
         this.bubbleY += this.dirY;
-        // console.log(this.bubbleX, this.bubbleY)
+        
         this.detectBorders();
     };
 
