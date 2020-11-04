@@ -27,9 +27,6 @@ export default class Boss {
         const img = new Image();
         img.src = this.imgSrc
         ctx.drawImage(img, this.bossX, this.bossY, this.bossWidth, this.bossHeight)
-        // this.bossMove(this.direction)
-        // this.bossX += 7;
-        console.log("draw",this.bossX);
     }
 
     bossMove() {
