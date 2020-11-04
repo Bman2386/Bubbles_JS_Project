@@ -96,10 +96,15 @@ footer a {
     width: 3.5rem;
 }
 
-.folder {
-    height: 3.5rem;
-    width: 3rem;
-    padding-top: .3rem;
+.folder{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: blue;
+}
+
+.folder:hover{
+    text-decoration: underline;
 }
 
 .modal {
@@ -159,16 +164,11 @@ footer a {
     border: 1px;
     border-radius: 8px;
     color: black;
-    background-color:  rgb(194, 191, 191);
-    filter: drop-shadow(8px 8px 8px rgb(177, 176, 176));
+    background-color:  rgb(177, 173, 173);
+    filter: drop-shadow(8px 8px 8px rgb(204, 202, 202));
     padding-top: 8px;
-    margin-left: 12px;
 }
 
-.key .key2 .key-row p {
-    margin-bottom: 0;
-    padding-top: 8px;
-}
 .key2 {
     text-align: center;
     height: 28px;
@@ -177,28 +177,27 @@ footer a {
     border: 1px;
     border-radius: 8px;
     color: black;
-    background-color:  rgb(194, 191, 191);
+    background-color:  rgb(177, 173, 173);
     filter: drop-shadow(8px 8px 8px rgb(177, 176, 176));
     padding-top: 8px;
 }
 
 .key-row {
     display: flex;
-    flex-direction: row;
+    margin-left: 0.8rem;
 }
 
-p {
-    font-family: arial;
+.key-row>.key{
     margin-left: 8px;
+    margin-right: 8px;
 }
-
-h3 {
+.normal {
     display: flex;
     align-items: center;
     text-align: center;
-    color: blue;
 }
 
 .instructions {
     margin-top: 10vh;
+    padding: 16px;
 }
