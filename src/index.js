@@ -11,22 +11,33 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     const modal = document.getElementById('modal');
+    const modal2 = document.getElementById('modal2');
+
     const trigger = document.getElementById('modal-trigger');
+    const trigger2 = document.getElementById('modal-trigger-2');
+
     trigger.addEventListener('click', e=> {
         e.preventDefault();
-        modal.classList.add('show');
+        modal.style.display = "flex";
+    });
+
+    trigger2.addEventListener('click', e=> {
+        e.preventDefault();
+        modal2.style.display = "flex";
     });
 
     const closeButton = document.getElementById('close-button');
+    const closeButton2 = document.getElementById('close-button2');
+
     closeButton.addEventListener('click', e => {
         e.preventDefault();
-        modal.classList.remove('show');
+        modal.style.display = "none";
     });
 
-    window.addEventListener('click', e => {
-        if (e.target.classList.contains('show')) {
-            modal.classList.remove('show');
-        }
+    closeButton2.addEventListener('click', e=> {
+        e.preventDefault();
+        modal2.style.display = "none";
     })
+    
 
 })
