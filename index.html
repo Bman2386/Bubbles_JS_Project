@@ -12,11 +12,11 @@
         
         <div class="wrapper">
             <div class="container">
+                <div id='score'>Score</div> 
                 <button class="button" id="new-game">New Game</button>
-                <div id='score'>Score</div>    
                 <button class="button" id="modal-trigger"> Controlls</button>
                 <button class="button" id="modal-trigger-2">How to play</button>
-                <h3>By Brendon Biagi</h3>
+                <a href="https://bman2386.github.io/brendon.biagi.github.io/" class="folder">By Brendon Biagi</a>
             </div>
             <div class="canva">
                 <canvas id="myCanvas" height="500" width="900"></canvas>  
@@ -25,13 +25,15 @@
         <div id="modal" class='modal'>
             <div class='modal-content' id='modal-content'>
                 <div class="close-button" id="close-button">&times;</div>
-                <div class="key-row"><p class="key">W</p><p>Up</p></div>
+                <p class="normal">Up</p>
+                <div><p class="key">W</p></div>
                 <div class="key-row">
-                    <p>Left</p><p class="key">A</p> <p class="key">S</p> <p class="key">D</p><p>Right</p>
+                    <p class="normal">Left</p><p class="key">A</p>  <p class="key">D</p><p class="normal">Right</p>
                 </div>
-                <p>Down</p>
-                <div><p class="key2">space</p></div>
-                <p>Boost(only usable in shield mode)</p>
+                <div><p class="key">S</p> </div>
+                <p class="normal">Down</p>
+                <div ><p class="key2">space</p></div>
+                <p class="normal">Boost(only usable in shield mode, tap while moving)</p>
             </div>
         </div>
         <div id="modal2" class='modal2'>
@@ -48,7 +50,7 @@
     <footer>
         <a href="https://github.com/Bman2386"><img src="./images/GitHub.png" class="git"></a>
         <a href="https://www.linkedin.com/in/brendonbiagi/"><img src="./images/linkedin.png" class="linked"></a>
-        <a href="https://bman2386.github.io/brendon.biagi.github.io/"><img src="./images/folder.png" class="folder"></a>
+        
     </footer>
     <script type="application/javascript" src="./dist/main.js"></script>
 </body> 
