@@ -11,7 +11,7 @@ export default class Boss {
         this.bossWidth = 200;
         this.bossHeight = 200;
 
-        this.bossHealth = 20;
+        this.bossHealth = 300;
 
         this.bossX = 200;
         this.bossY = 75;
@@ -27,6 +27,19 @@ export default class Boss {
         const img = new Image();
         img.src = this.imgSrc
         ctx.drawImage(img, this.bossX, this.bossY, this.bossWidth, this.bossHeight)
+        this.healthBar();
+    }
+
+    healthBar() {
+        this.ctx.beginPath(); 
+        this.ctx.rect(this.bossX, (this.bossY-20), 300, 20); 
+        this.ctx.fillStyle = "#FF0000";
+        this.ctx.fill();
+
+        this.ctx.beginPath(); 
+        this.ctx.rect(this.bossX, (this.bossY-20), this.bossHealth, 20); 
+        this.ctx.fillStyle = "#339933"; 
+        this.ctx.fill();
     }
 
     bossMove() {

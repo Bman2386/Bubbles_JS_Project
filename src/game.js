@@ -93,7 +93,8 @@ export default class Game {
 
         if ((clipLeft < bubbleRight && clipRight > bubbleLeft) &&
         (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
-            this.clips.splice(idx, 1)
+            this.clips.splice(idx, 1);
+            this.bubble.score += 1;
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1;
                 this.bubble.sound.play();
@@ -121,6 +122,7 @@ export default class Game {
             this.birds.splice(idx, 1);
             this.deadX = bird.birdX
             this.deadY = bird.birdY
+            this.bubble.score += 2;
             this.clouds.push(new Cloud);
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1;
@@ -154,6 +156,7 @@ export default class Game {
             }
             boss.bossHealth -= 1;
             if (boss.bossHealth < 0) {
+                this.bubble.score += 100;
                 this.win = true
             }
         }
@@ -177,6 +180,7 @@ export default class Game {
             this.deadX = poop.poopX;
             this.deadY = poop.poopY;
             this.clouds.push(new Cloud);
+            this.bubble.score += 2;
 
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1;

@@ -29,16 +29,16 @@
         -Obstacles to pop your bubble will appear with greater frequency as time goes on, but fear not! Running into bubbles will increase your health, which is displayed by your bubbles size, and if you grab a shield you are temporarily invulnerable, meaning you can pop the obsticles instead of being popped by them.
 
     **Day 4**
+    
      Write Production Readme
 
     **Bonus**
-    * music and sound effects
+    * music & sound effects
     * shooting objects
     * Customize Bubble
 
     ## tech used
-    * webpack
+    * webpack(npm start)
 
     ## Sound Credits
     * All sounds and music from  [storyblocks.com](https://www.storyblocks.com/)
-(npm start)
