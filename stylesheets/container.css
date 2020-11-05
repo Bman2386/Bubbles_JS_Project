@@ -76,11 +76,11 @@
     height: 3rem;
     width: 3rem;
 }
+
 footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    
 }
 
 footer a {
@@ -200,4 +200,14 @@ footer a {
 .instructions {
     margin-top: 10vh;
     padding: 16px;
+}
+
+.power{
+    text-align: center;
+    color: blue;
+}
+
+.enemy{
+    text-align: center;
+    color: red;
 }
