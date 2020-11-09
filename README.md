@@ -12,7 +12,7 @@
 
 
     ## Wireframe
-    ![Bubbles, wireframe](/images/wirephrame.jpg)
+    ![Bubbles, wireframe](/images/BubblesWireframe.jpg)
 
     ## Timeline
     **Day 1**
@@ -42,3 +42,7 @@
 
     ## Sound Credits
     * All sounds and music from  [storyblocks.com](https://www.storyblocks.com/)
+
+    Note to self:
+    $npm run webpack:build
+    (before pushing to see changes on live version)

@@ -53,7 +53,6 @@ export default class Boss {
     }
 
     boundry() {
-        console.log("boundry", this.bossX)
         if (this.bossX > 700) {
             this.direction = "left"
         } else if (this.bossX < -20) {
