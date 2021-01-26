@@ -1,33 +1,43 @@
-
+body {
+    background-image: url("../images/bubbles_background.png");
+}
 .canva {
     display: flex;
     justify-content: center;
     height: 100%;
     width: 100%;
-    background-size: cover;
-    z-index: 0;
+    /* background-size: cover; */
+    z-index: 1;
+    background-color: transparent;
 }
 #myCanvas {
     background-image: url("../images/background.jpg");
     background-size: contain;
     background-repeat: round;
-    z-index: 1;
+    z-index: 2;
     border: 8px;
     border-radius: 8px;
     filter: drop-shadow(32px 32px 32px rgb(156, 156, 240));
     
 }
 
+
 .wrapper {
     display: flex;
     flex-direction: column;
+    background: transparent;
 }
 #score {
+    align-self: center;
     color: blue;
     text-align: center;
     padding-bottom: 1rem;
+    width: 5rem;
+    background-color: transparent;
 }
-
+a {
+    background-color: transparent;
+}
 .title{
     font-size: xx-large;
     font-weight: 900;
@@ -36,12 +46,14 @@
     padding: 8px;   
     letter-spacing: 0.5rem;
     font-family: "Comic Sans MS", cursive, sans-serif;
+    background-color: transparent;
 }
 .container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin:  0 1rem 1rem 1rem;
+    background-color: transparent;
 }
 
 .controller{
@@ -81,6 +93,7 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    background-color: transparent;
 }
 
 footer a {
@@ -101,6 +114,7 @@ footer a {
     align-items: center;
     text-align: center;
     color: blue;
+    background-color: transparent;
 }
 
 .folder:hover{
