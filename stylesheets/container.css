@@ -87,6 +87,7 @@ a {
 .linked {
     height: 3rem;
     width: 3rem;
+    background: transparent;
 }
 
 footer {
