@@ -374,9 +374,10 @@ export default class Game {
     }
 
     updateScore() {
-        // document.getElementById('score')
         this.bubble.score += 0.01558;
-        this.scoreCount.innerText = `Score: ${this.bubble.score}`;
+        const score = Math.round(this.bubble.score)
+        console.log(score)
+        this.scoreCount.innerText = `Score: ${score}`;
     }
 
     winScreen(ctx){
