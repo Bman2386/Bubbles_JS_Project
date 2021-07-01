@@ -376,7 +376,6 @@ export default class Game {
     updateScore() {
         this.bubble.score += 0.01558;
         const score = Math.round(this.bubble.score)
-        console.log(score)
         this.scoreCount.innerText = `Score: ${score}`;
     }
 
