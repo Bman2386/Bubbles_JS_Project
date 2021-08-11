@@ -391,7 +391,6 @@ export default class Game {
 
     gameOver() {
         if (this.bubble.bubbleHealth < 1) {
-            // this.scoreCount.innerText = `You WIN!!! Score: ${this.bubble.score}`;
             return true;
         }
         return false;
