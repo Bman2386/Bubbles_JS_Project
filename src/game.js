@@ -276,7 +276,6 @@ export default class Game {
            }
 
             if (this.bubble.score > 500) {
-                // this.boss.health = 50
                 this.boss.bossMove();
                 this.boss.drawBoss(this.ctx)
                 this.detectBossCollision(this.boss);
