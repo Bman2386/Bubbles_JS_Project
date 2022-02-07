@@ -19,9 +19,9 @@ export default class Bubble {
         this.dirY = 0;
 
         this.score = 0;
-        this.sound = new Sound("src/sounds/pop.mp3")
-        this.boostSound = new Sound("src/sounds/boost.mp3")
-
+        this.sound = new Sound("src/sounds/pop.mp3");
+        this.boostSound = new Sound("src/sounds/boost.mp3");
+        this.mute = false;
         this.imgSrc = "./images/bubble.png";
 
         this.drawBubble = this.drawBubble.bind(this);
@@ -99,7 +99,7 @@ export default class Bubble {
                 this.dirY = 2;
                 break;
             case "boost":
-                this.boostSound.play()
+                this.mute ? null : this.boostSound.play()
                 this.dirX *= 5;
                 this.dirY *= 5;
                 break

@@ -51,7 +51,7 @@ export default class Game {
         this.gameUpdate = this.gameUpdate.bind(this);
         this.restart = this.restart.bind(this);
         this.endGame = this.endGame.bind(this);
-
+        this.mute = this.mute.bind(this);
         this.scoreCount = document.getElementById("score");
         this.updateScore = this.updateScore.bind(this);
     }
@@ -78,6 +78,17 @@ export default class Game {
         this.soundOn = true;
     }
 
+    mute() {
+        if (this.soundOn){
+            this.soundOn = false;
+            this.bubble.mute = true;
+            this.gameMusic.stop();
+        } else {
+            this.soundOn = true;
+            this.bubble.mute = false;
+            this.gameMusic.play();
+        }
+    }
 
     detectClipCollision(clip) {
         const clipTop = ((clip.clipY))
@@ -97,9 +108,9 @@ export default class Game {
             this.bubble.score += 1;
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1;
-                this.bubble.sound.play();
+                this.soundOn ? this.bubble.sound.play() : null;
             } else {
-                this.deadSound.play();
+                this.soundOn ? this.deadSound.play(): null;
             }
         }
     }
@@ -126,9 +137,9 @@ export default class Game {
             this.clouds.push(new Cloud);
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1;
-                this.bubble.sound.play();
+                this.soundOn ? this.bubble.sound.play() : null;
             } else {
-                this.deadSound.play();
+                this.soundOn ? this.deadSound.play(): null;
             }
         }
        if (bird.birdX > 875) {
@@ -150,7 +161,7 @@ export default class Game {
 
         if ((bossLeft < bubbleRight && bossRight > bubbleLeft) &&
         (bossTop < bubbleBottom && bossBottom > bubbleTop)) {
-            this.fartSound.play()
+            this.soundOn ? this.fartSound.play() : null;
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1;
             }
@@ -184,9 +195,9 @@ export default class Game {
 
             if (this.protected === false) {
                 this.bubble.bubbleHealth -= 1;
-                this.bubble.sound.play();
+                this.soundOn ? this.bubble.sound.play(): null;
             } else {
-                this.deadSound.play();
+               this.soundOn ?  this.deadSound.play(): null;
             }
         }
        if (poop.poopY > 500) {
@@ -213,7 +224,7 @@ export default class Game {
             this.ups.shift()
             if(this.protected === false)
             this.bubble.bubbleHealth = 2;
-            this.upsSound.play();
+            this.soundOn ? this.upsSound.play(): null;
         }
     }
 
@@ -236,7 +247,7 @@ export default class Game {
             this.shields.shift()
             this.protected = true;
             this.frameX = 0;
-            this.upsSound.play();
+            this.soundOn ? this.upsSound.play(): null;
         }
         if (shield.shieldY > 500) {
             this.shields.shift();
@@ -269,6 +280,8 @@ export default class Game {
 
             if (this.soundOn) {
                 this.gameMusic.play();
+            } else {
+                this.gameMusic.stop()
             }
             
             
@@ -281,7 +294,7 @@ export default class Game {
                 this.boss.drawBoss(this.ctx)
                 this.detectBossCollision(this.boss);
                 this.gameMusic.stop();
-                this.bossMusic.play();
+                this.soundOn ? this.bossMusic.play() : null;
             }
 
             this.clips.forEach(clip => {
@@ -311,7 +324,7 @@ export default class Game {
 
             if (this.frameB > 75) {
                 this.birds.push(new Bird);
-                this.birdSound.play();
+                this.soundOn ? this.birdSound.play(): null;
                 this.frameB = 0;
             }
             if (this.birds.length > 0) {
@@ -386,7 +399,7 @@ export default class Game {
         img.onload = function() {
             ctx.drawImage(img, 0, 0, 900, 500)
         }
-        this.winSound.play()
+        this.soundOn ? this.winSound.play() : null
     }
 
     gameOver() {
@@ -403,7 +416,7 @@ export default class Game {
         img.onload = function() {
             ctx.drawImage(img, 0, 0, 900, 500)
         }
-        this.loseSound.play()
+        this.soundOn ? this.loseSound.play() : null
     }
 
     

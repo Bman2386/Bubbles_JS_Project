@@ -1,4 +1,4 @@
-import Game from './game'
+import Game from './game';
 
 document.addEventListener("DOMContentLoaded", function() {
     const canvas = document.getElementById("myCanvas");
@@ -10,6 +10,14 @@ document.addEventListener("DOMContentLoaded", function() {
         game.restart();
     });
 
+    const muteButton = document.getElementById('muteButton');
+    muteButton.addEventListener('click', e=> {
+        e.preventDefault();
+        if (game.playing){
+            game.mute();
+            muteButton.classList.toggle('muted') 
+        }  
+    })
     const modal = document.getElementById('modal');
     const modal2 = document.getElementById('modal2');
 
