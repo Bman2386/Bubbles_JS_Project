@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const muteButton = document.getElementById('muteButton');
     muteButton.addEventListener('click', e=> {
         e.preventDefault();
+        buttonDisplay();
         if (game.playing){
             game.mute();
             muteButton.classList.toggle('muted') 

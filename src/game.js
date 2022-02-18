@@ -54,7 +54,10 @@ export default class Game {
         this.mute = this.mute.bind(this);
         this.scoreCount = document.getElementById("score");
         this.updateScore = this.updateScore.bind(this);
+        this.muteDisplay = this.muteDisplay.bind(this);
     }
+
+    
 
     restart() {
         if (this.frameId) {
@@ -391,7 +394,7 @@ export default class Game {
         const score = Math.round(this.bubble.score)
         this.scoreCount.innerText = `Score: ${score}`;
     }
-
+    
     winScreen(ctx){
         this.playing = false;
         const img = new Image();
@@ -400,6 +403,7 @@ export default class Game {
             ctx.drawImage(img, 0, 0, 900, 500)
         }
         this.soundOn ? this.winSound.play() : null
+        this.muteDisplay();
     }
 
     gameOver() {
@@ -417,7 +421,14 @@ export default class Game {
             ctx.drawImage(img, 0, 0, 900, 500)
         }
         this.soundOn ? this.loseSound.play() : null
+        this.muteDisplay();
     }
 
+    muteDisplay() {
+        if (!this.playing) {
+            const muteButton = document.getElementById('muteButton');
+            muteButton.style.display = 'none'
+        }
+    }
     
 }
