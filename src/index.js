@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     button.addEventListener('click', e => {
         e.preventDefault();
         game.restart();
+        buttonDisplay();
     });
 
     const muteButton = document.getElementById('muteButton');
@@ -18,6 +19,12 @@ document.addEventListener("DOMContentLoaded", function() {
             muteButton.classList.toggle('muted') 
         }  
     })
+    const buttonDisplay = () => {
+    if (!game.playing) muteButton.style.display = 'none';
+    if (game.playing) muteButton.style.display = 'flex';
+    }
+    buttonDisplay();
+
     const modal = document.getElementById('modal');
     const modal2 = document.getElementById('modal2');
 
