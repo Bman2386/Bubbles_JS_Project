@@ -129,14 +129,10 @@ export default class Bubble {
 
     keyUpHandler(e) {
         e.preventDefault();
-        if (e.key == "a" || e.key == "KeyA") {
+        if (e.key == "a" || e.key == "KeyA" || e.key == "d" || e.key == "KeyD") {
             this.stopBubble("horizontal");
-        } else if (e.key == "d" || e.key == "KeyD") {
-            this.stopBubble("horizontal");
-        } else if (e.key == "w" || e.key == "KeyW") {
+        } else if (e.key == "w" || e.key == "KeyW" || e.key == "s" || e.key == "KeyS") {
             this.stopBubble("vertical");
-        } else if (e.key == "s" || e.key == "KeyS"){
-            this.stopBubble("vertical")
         } 
     };
 }
