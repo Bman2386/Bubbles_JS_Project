@@ -29,6 +29,7 @@ export default class Bubble {
 
         this.keyDownHandler = this.keyDownHandler.bind(this);
         this.keyUpHandler = this.keyUpHandler.bind(this);
+        this.stopBubble = this.stopBubble.bind(this);
 
         document.addEventListener("keydown", this.keyDownHandler, false);
         document.addEventListener("keyup", this.keyUpHandler, false);
@@ -82,10 +83,6 @@ export default class Bubble {
     }
     moveBubble(direction) {
         switch (direction) {
-            case "none":
-                this.dirX = 0;
-                this.dirY = 0;
-                break;
             case "left":
                 this.dirX = -2;
                 break;
@@ -106,6 +103,14 @@ export default class Bubble {
         }
     };
 
+    stopBubble(direction){
+        if (direction === 'horizontal'){
+            this.dirX = 0;
+        }
+        if (direction === 'vertical'){
+            this.dirY = 0;
+        }
+    }
     keyDownHandler(e) {
         e.preventDefault();
         if (e.key == "a" || e.key == "KeyA") {
@@ -118,20 +123,20 @@ export default class Bubble {
             this.moveBubble("down")
         } else if ((e.key == " " || e.key =="SpaceBar") && this.bubbleHealth > 30){
             this.moveBubble("boost")
-        }
+        } 
 
     };
 
     keyUpHandler(e) {
         e.preventDefault();
         if (e.key == "a" || e.key == "KeyA") {
-            this.moveBubble("none");
+            this.stopBubble("horizontal");
         } else if (e.key == "d" || e.key == "KeyD") {
-            this.moveBubble("none");
+            this.stopBubble("horizontal");
         } else if (e.key == "w" || e.key == "KeyW") {
-            this.moveBubble("none");
+            this.stopBubble("vertical");
         } else if (e.key == "s" || e.key == "KeyS"){
-            this.moveBubble("none")
+            this.stopBubble("vertical")
         } 
     };
 }
