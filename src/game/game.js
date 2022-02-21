@@ -37,15 +37,15 @@ export default class Game {
         this.playing = false;
         this.soundOn = false;
 
-        this.winSound = new Sound("src/sounds/win.mp3");
-        this.loseSound = new Sound("src/sounds/lose.mp3");
-        this.fartSound = new Sound("src/sounds/fart.mp3");
-        this.upsSound = new Sound("src/sounds/ups.mp3");
-        this.birdSound = new Sound("src/sounds/bird.mp3");
-        this.deadSound = new Sound("src/sounds/dead.mp3");
+        this.winSound = new Sound("src/game/sounds/win.mp3");
+        this.loseSound = new Sound("src/game/sounds/lose.mp3");
+        this.fartSound = new Sound("src/game/sounds/fart.mp3");
+        this.upsSound = new Sound("src/game/sounds/ups.mp3");
+        this.birdSound = new Sound("src/game/sounds/bird.mp3");
+        this.deadSound = new Sound("src/game/sounds/dead.mp3");
 
-        this.gameMusic = new Sound("src/sounds/game.mp3")
-        this.bossMusic = new Sound("src/sounds/boss.mp3")
+        this.gameMusic = new Sound("src/game/sounds/game.mp3")
+        this.bossMusic = new Sound("src/game/sounds/boss.mp3")
 
         this.gameOver = this.gameOver.bind(this);
         this.gameUpdate = this.gameUpdate.bind(this);
