@@ -145,20 +145,6 @@ footer a {
     z-index: 10;
 }
 
-.close-button {
-    padding: 0;
-    position: absolute;
-    background: transparent;
-    right: 23rem;
-    font-size: 28px;
-    color: rgb(64,64,64);
-    top: 6rem;
-    z-index: 13;
-    cursor: pointer;
-    border-radius: 4px;
-    text-align: center;
-}
-
 .modal-content {
     display: flex;
     align-items: center;

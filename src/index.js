@@ -42,18 +42,8 @@ document.addEventListener("DOMContentLoaded", function() {
         modal2.style.display = "flex";
     });
 
-    const closeButton = document.getElementById('close-button');
-    const closeButton2 = document.getElementById('close-button2');
-
-    closeButton.addEventListener('click', e => {
-        e.preventDefault();
-        modal.style.display = "none";
-    });
-
-    closeButton2.addEventListener('click', e=> {
-        e.preventDefault();
-        modal2.style.display = "none";
-    })
-    
-
+   window.onclick = e => {
+       if (e.target == modal) modal.style.display = 'none';
+       if (e.target == modal2) modal2.style.display = 'none';
+   }
 })
