@@ -231,7 +231,7 @@ export default class Game {
         }
     }
 
-    // dry this code with a collision function that gets called with each vs seperate collision algos
+    
     detectShieldCollision(shield){
         const shieldTop = ((shield.shieldY))
         const shieldBottom = ((shield.shieldY + shield.shieldHeight));
