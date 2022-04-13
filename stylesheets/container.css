@@ -90,6 +90,11 @@ a {
     background: transparent;
 }
 
+.linked:hover{
+    height: 3.25rem;
+    width: 3.25rem;
+}
+
 #muteButton::after{
     content: 'mute';
 }
@@ -113,6 +118,10 @@ footer a {
     width: 3rem;
 }
 
+.git:hover{
+    height: 3.25rem;
+    width: 3.25rem;
+}
 .bubbles {
     height: 3.5rem;
     width: 3.5rem;
@@ -128,6 +137,7 @@ footer a {
 
 .folder:hover{
     text-decoration: underline;
+    font-size: 1.05rem;
 }
 
 
