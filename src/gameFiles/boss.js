@@ -4,22 +4,22 @@ export default class Boss {
     constructor(canvasWidth, canvasHeight) {
         const canvas = document.getElementById('myCanvas');
         this.ctx = canvas.getContext("2d");
-
+        // canvas size
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
-
+        // Boss size
         this.bossWidth = 200;
         this.bossHeight = 200;
 
         this.bossHealth = 300;
-
+        // Boss starting position
         this.bossX = 200;
         this.bossY = 75;
         
         this.imgSrc = "./images/spaceship.jpg"
-
+        // Binding "this" to the drawBoss function so that we don't lose on instantiation
         this.drawBoss = this.drawBoss.bind(this)
-
+        // starting direction of boss
         this.direction = "right"
     }
 
@@ -42,10 +42,12 @@ export default class Boss {
         this.ctx.fill();
     }
 
+
     bossMove() {
         if (this.direction === "right") {
             this.bossX += 10;
-        } else if (this.direction === "left") {
+        }
+         if (this.direction === "left") {
             this.bossX -= 10;
         }
         this.boundry()
