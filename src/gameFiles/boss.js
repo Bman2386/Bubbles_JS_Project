@@ -51,7 +51,6 @@ export default class Boss {
             this.bossX -= 10
         }
         this.boundry()
-       
     }
 
     boundry() {
