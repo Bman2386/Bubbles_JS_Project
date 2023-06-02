@@ -24,6 +24,7 @@ export default class Boss {
     }
 
     drawBoss(ctx) {
+        // draws the boss on screen when score threshold is reached
         const img = new Image()
         img.src = this.imgSrc
         ctx.drawImage(img, this.bossX, this.bossY, this.bossWidth, this.bossHeight)
@@ -31,6 +32,7 @@ export default class Boss {
     }
 
     healthBar() {
+        // health bar for the boss
         this.ctx.beginPath()
         this.ctx.rect(this.bossX, (this.bossY-20), 300, 20)
         this.ctx.fillStyle = "#FF0000"
