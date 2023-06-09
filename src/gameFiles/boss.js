@@ -12,14 +12,11 @@ export default class Boss {
         this.bossHeight = 200
 
         this.bossHealth = 300
-        // Boss starting position
         this.bossX = 200
         this.bossY = 75
         
         this.imgSrc = "./images/spaceship.jpg"
-        // Binding "this" to the drawBoss function so that we don't lose on instantiation
         this.drawBoss = this.drawBoss.bind(this)
-        // starting direction of boss
         this.direction = "right"
     }
 
