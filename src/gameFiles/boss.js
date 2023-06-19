@@ -4,10 +4,10 @@ export default class Boss {
     constructor(canvasWidth, canvasHeight) {
         const canvas = document.getElementById('myCanvas')
         this.ctx = canvas.getContext("2d")
-        // canvas size
+        
         this.canvasWidth = canvasWidth
         this.canvasHeight = canvasHeight
-        // Boss size
+        
         this.bossWidth = 200
         this.bossHeight = 200
 
@@ -29,15 +29,19 @@ export default class Boss {
     }
 
     healthBar() {
-        // health bar for the boss
+        const pixelWidth = 300
+        const pixelHeight = 20
+        const aboveBossArea = this.bossY - 20
+        const innerHealthBarColor = "#FF0000"
+        const outerHealthBarColor = "#339933"
         this.ctx.beginPath()
-        this.ctx.rect(this.bossX, (this.bossY-20), 300, 20)
-        this.ctx.fillStyle = "#FF0000"
+        this.ctx.rect(this.bossX, aboveBossArea, pixelWidth, pixelHeight)
+        this.ctx.fillStyle = innerHealthBarColor
         this.ctx.fill()
 
         this.ctx.beginPath(); 
-        this.ctx.rect(this.bossX, (this.bossY-20), this.bossHealth, 20)
-        this.ctx.fillStyle = "#339933"
+        this.ctx.rect(this.bossX, aboveBossArea, this.bossHealth, pixelHeight)
+        this.ctx.fillStyle = outerHealthBarColor
         this.ctx.fill()
     }
 

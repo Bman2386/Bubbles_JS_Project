@@ -18,7 +18,7 @@
 
 ## Adding features
 - In order to see/test new features, be sure to run 
-    ```$npm run build```
+    ```$npm run webpack:build```
 - webpack will need to install them before changes will take effect
 
     ## Wireframe
