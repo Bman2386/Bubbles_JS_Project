@@ -15,6 +15,12 @@
 - clone repo
 - npm install
 - npm start, runs on localhost: 8080 (alternitvely you can double click html icon from the desktop)
+
+## Adding features
+- In order to see/test new features, be sure to run 
+    ```$npm run build```
+- webpack will need to install them before changes will take effect
+
     ## Wireframe
     ![Bubbles, wireframe](/images/BubblesWireframe.jpg)
 
@@ -42,11 +48,11 @@
     * Customize Bubble
 
     ## tech used
-    * webpack(npm start)
+    * webpack v3.5.6
+    * node v16.10
+    * Canva
 
     ## Sound Credits
     * All sounds and music from  [storyblocks.com](https://www.storyblocks.com/)
 
-    Note to self:
-    $npm run webpack:build
-    (before pushing to see changes on live version)
+  
