@@ -10,7 +10,11 @@
     * Game logic, collision detection
     * Score computation
 
-
+## To Run Locally 
+- (requires node v8.10 || greater (ex v16.10), JavaScript ECMA script 6, webpack 3.5.6)
+- clone repo
+- npm install
+- npm start, runs on localhost: 8080 (alternitvely you can double click html icon from the desktop)
     ## Wireframe
     ![Bubbles, wireframe](/images/BubblesWireframe.jpg)
 
