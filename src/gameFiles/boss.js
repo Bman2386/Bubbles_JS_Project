@@ -31,16 +31,16 @@ export default class Boss {
     healthBar() {
         const pixelWidth = 300
         const pixelHeight = 20
-        const aboveBossArea = this.bossY - 20
+        const aboveBossHead = this.bossY - 20
         const innerHealthBarColor = "#FF0000"
         const outerHealthBarColor = "#339933"
         this.ctx.beginPath()
-        this.ctx.rect(this.bossX, aboveBossArea, pixelWidth, pixelHeight)
+        this.ctx.rect(this.bossX, aboveBossHead, pixelWidth, pixelHeight)
         this.ctx.fillStyle = innerHealthBarColor
         this.ctx.fill()
 
         this.ctx.beginPath(); 
-        this.ctx.rect(this.bossX, aboveBossArea, this.bossHealth, pixelHeight)
+        this.ctx.rect(this.bossX, aboveBossHead, this.bossHealth, pixelHeight)
         this.ctx.fillStyle = outerHealthBarColor
         this.ctx.fill()
     }
