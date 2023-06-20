@@ -15,8 +15,8 @@ export default class Bubble {
 
         this.bubbleX = 450
         this.bubbleY = 200
-        this.dirX = 0
-        this.dirY = 0
+        this.xDirection = 0
+        this.yDirection = 0
 
         this.score = 0
         this.sound = new Sound("src/game/sounds/pop.mp3")
@@ -60,8 +60,8 @@ export default class Bubble {
     }
 
     newPos() {
-        this.bubbleX += this.dirX
-        this.bubbleY += this.dirY
+        this.bubbleX += this.xDirection
+        this.bubbleY += this.yDirection
         
         this.detectBorders()
     }
@@ -84,31 +84,31 @@ export default class Bubble {
     moveBubble(direction) {
         switch (direction) {
             case "left":
-                this.dirX = -2
+                this.xDirection = -2
                 break
             case "right":
-                this.dirX = 2
+                this.xDirection = 2
                 break
             case "up":
-                this.dirY = -2
+                this.yDirection = -2
                 break
             case "down":
-                this.dirY = 2
+                this.yDirection = 2
                 break
             case "boost":
                 this.mute ? null : this.boostSound.play()
-                this.dirX *= 5
-                this.dirY *= 5
+                this.xDirection *= 5
+                this.yDirection *= 5
                 break
         }
     }
 
     stopBubble(direction){
         if (direction === 'horizontal'){
-            this.dirX = 0
+            this.xDirection = 0
         }
         if (direction === 'vertical'){
-            this.dirY = 0
+            this.yDirection = 0
         }
     }
     keyDownHandler(e) {
