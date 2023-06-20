@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.0.1",
+    "caniuse-lite": "^1.0.30001505",
     "file-loader": "^6.1.1",
     "mini-css-extract-plugin": "^1.0.0",
     "postcss": "^8.1.1"
