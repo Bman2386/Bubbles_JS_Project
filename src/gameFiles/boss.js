@@ -21,7 +21,6 @@ export default class Boss {
     }
 
     drawBoss(ctx) {
-        // draws the boss on screen when score threshold is reached
         const img = new Image()
         img.src = this.imgSrc
         ctx.drawImage(img, this.bossX, this.bossY, this.bossWidth, this.bossHeight)
