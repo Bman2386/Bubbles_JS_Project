@@ -259,13 +259,13 @@ export default class Game {
     }
 
     pooping(bird) {
-        let tempX
-        let tempY
+        let birdCurrentXPosition
+        let birdCurrentYPosition
         if (this.frameP > 15) {
-                tempX = bird.birdX
-                tempY = bird.birdY
+                birdCurrentXPosition = bird.birdX
+                birdCurrentYPosition = bird.birdY
                 this.poops.push(new Poop)
-                this.poops[this.poops.length - 1].startPosition(tempX, tempY)
+                this.poops[this.poops.length - 1].startPosition(birdCurrentXPosition, birdCurrentYPosition)
                 this.frameP = 0
             }
     }

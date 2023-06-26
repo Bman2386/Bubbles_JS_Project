@@ -22,9 +22,9 @@ export default class Poop {
             this.fall()
         }
  
-        startPosition(tempX, tempY) {
-            this.poopX = tempX
-            this.poopY = tempY
+        startPosition(birdXPosition, birdYPosition) {
+            this.poopX = birdXPosition
+            this.poopY = birdYPosition
         }
         fall(){
             this.poopY += 5
