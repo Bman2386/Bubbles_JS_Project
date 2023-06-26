@@ -21,8 +21,8 @@ export default class Poop {
             ctx.drawImage(img, this.poopX, this.poopY, this.poopHeight, this.poopWidth)
             this.fall()
         }
-
-        start(tempX, tempY) {
+ 
+        startPosition(tempX, tempY) {
             this.poopX = tempX
             this.poopY = tempY
         }

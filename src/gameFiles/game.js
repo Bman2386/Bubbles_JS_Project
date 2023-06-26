@@ -265,7 +265,7 @@ export default class Game {
                 tempX = bird.birdX
                 tempY = bird.birdY
                 this.poops.push(new Poop)
-                this.poops[this.poops.length - 1].start(tempX, tempY)
+                this.poops[this.poops.length - 1].startPosition(tempX, tempY)
                 this.frameP = 0
             }
     }
