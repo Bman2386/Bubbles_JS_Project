@@ -28,7 +28,7 @@ export default class Game {
 
         this.bossFrame = 0
         this.cloudFrame = 0
-        this.frameP = 0
+        this.poopFrame = 0
         this.frameS = 0
         this.frameX = 0
 
@@ -261,12 +261,12 @@ export default class Game {
     pooping(bird) {
         let birdCurrentXPosition
         let birdCurrentYPosition
-        if (this.frameP > 15) {
+        if (this.poopFrame > 15) {
                 birdCurrentXPosition = bird.birdX
                 birdCurrentYPosition = bird.birdY
                 this.poops.push(new Poop)
                 this.poops[this.poops.length - 1].startPosition(birdCurrentXPosition, birdCurrentYPosition)
-                this.frameP = 0
+                this.poopFrame = 0
             }
     }
 
@@ -331,7 +331,7 @@ export default class Game {
                 this.bossFrame = 0
             }
             if (this.birds.length > 0) {
-                this.frameP += 1
+                this.poopFrame += 1
             }
 
             if (this.clouds.length > 0) {
