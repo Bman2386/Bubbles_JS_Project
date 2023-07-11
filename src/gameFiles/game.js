@@ -32,7 +32,7 @@ export default class Game {
         this.frameS = 0
         this.frameX = 0
 
-        this.protected = false
+        this.playerIsProtected = false
         this.win = false
         this.playing = false
         this.soundOn = false
@@ -109,7 +109,7 @@ export default class Game {
         (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
             this.clips.splice(idx, 1)
             this.bubble.score += 1
-            if (this.protected === false) {
+            if (this.playerIsProtected === false) {
                 this.bubble.bubbleHealth -= 1
                 this.soundOn ? this.bubble.sound.play() : null
             } else {
@@ -138,7 +138,7 @@ export default class Game {
             this.deadY = bird.birdY
             this.bubble.score += 2
             this.clouds.push(new Cloud)
-            if (this.protected === false) {
+            if (this.playerIsProtected === false) {
                 this.bubble.bubbleHealth -= 1
                 this.soundOn ? this.bubble.sound.play() : null
             } else {
@@ -165,7 +165,7 @@ export default class Game {
         if ((bossLeft < bubbleRight && bossRight > bubbleLeft) &&
         (bossTop < bubbleBottom && bossBottom > bubbleTop)) {
             this.soundOn ? this.fartSound.play() : null
-            if (this.protected === false) {
+            if (this.playerIsProtected === false) {
                 this.bubble.bubbleHealth -= 1
             }
             boss.bossHealth -= 1
@@ -196,7 +196,7 @@ export default class Game {
             this.clouds.push(new Cloud)
             this.bubble.score += 2
 
-            if (this.protected === false) {
+            if (this.playerIsProtected === false) {
                 this.bubble.bubbleHealth -= 1
                 this.soundOn ? this.bubble.sound.play(): null
             } else {
@@ -225,7 +225,7 @@ export default class Game {
 
             this.bubble.score += 5
             this.ups.shift()
-            if(this.protected === false)
+            if(this.playerIsProtected === false)
             this.bubble.bubbleHealth = 2
             this.soundOn ? this.upsSound.play(): null
         }
@@ -248,7 +248,7 @@ export default class Game {
             this.bubble.bubbleHealth = 50
             this.bubble.score += 50
             this.shields.shift()
-            this.protected = true
+            this.playerIsProtected = true
             this.frameX = 0
             this.soundOn ? this.upsSound.play(): null
         }
@@ -288,7 +288,7 @@ export default class Game {
             }
             
             
-           if (this.protected) {
+           if (this.playerIsProtected) {
                this.frameX += 1
            }
 
@@ -350,7 +350,7 @@ export default class Game {
             }
            
             if (this.frameX > 300) {
-                this.protected = false
+                this.playerIsProtected = false
                 this.bubble.bubbleHealth = 2
                 this.frameX = 0
             }
