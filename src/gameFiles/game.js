@@ -1,6 +1,6 @@
 import Bubble from './bubble'
 import Clip from './clip'
-import Ups from './ups'
+import Bubbles from './bubbles'
 import Bird from './bird'
 import Cloud from './cloud'
 import Poop from './poop'
@@ -18,7 +18,7 @@ export default class Game {
 
         this.birds = []
         this.clouds = []
-        this.ups = []
+        this.bubbles = []
         this.clips = []
         this.poops = []
         this.shield = []
@@ -40,7 +40,7 @@ export default class Game {
         this.winSound = new Sound("src/gameFiles/sounds/win.mp3")
         this.loseSound = new Sound("src/gameFiles/sounds/lose.mp3")
         this.fartSound = new Sound("src/gameFiles/sounds/fart.mp3")
-        this.upsSound = new Sound("src/gameFiles/sounds/ups.mp3")
+        this.bubblesSound = new Sound("src/gameFiles/sounds/bubbles.mp3")
         this.birdSound = new Sound("src/gameFiles/sounds/bird.mp3")
         this.deadSound = new Sound("src/gameFiles/sounds/dead.mp3")
 
@@ -75,7 +75,7 @@ export default class Game {
         this.shields = []
         this.birds = []
         this.poops = []
-        this.ups = []
+        this.bubbles = []
         this.bubble.drawBubble(this.bubble.ctx)
         this.gameUpdate()
         this.soundOn = true
@@ -224,10 +224,10 @@ export default class Game {
          (bubblesTop <= bubbleBottom && bubblesBottom >= bubbleTop)) {
 
             this.bubble.score += 5
-            this.ups.shift()
+            this.bubbles.shift()
             if(this.playerIsProtected === false)
             this.bubble.bubbleHealth = 2
-            this.soundOn ? this.upsSound.play(): null
+            this.soundOn ? this.bubblesSound.play(): null
         }
     }
 
@@ -250,7 +250,7 @@ export default class Game {
             this.shields.shift()
             this.playerIsProtected = true
             this.protectedFrame = 0
-            this.soundOn ? this.upsSound.play(): null
+            this.soundOn ? this.bubblesSound.play(): null
         }
         if (shield.shieldY > 500) {
             this.shields.shift()
@@ -312,7 +312,7 @@ export default class Game {
                 cloud.drawCloud(this.ctx, this.deadX, this.deadY)
             })
 
-            this.ups.forEach(up =>{
+            this.bubbles.forEach(up =>{
                 up.drawBubbles(this.ctx, this.deadX, this.deadY)
             })
 
@@ -340,7 +340,7 @@ export default class Game {
 
             if (this.cloudFrame > 25) {
                 this.clouds.shift()
-                this.ups.push(new Ups)
+                this.bubbles.push(new Bubbles)
                 this.cloudFrame = 0
             }
 
@@ -361,7 +361,7 @@ export default class Game {
             this.birds.forEach(bird => {
                 this.detectBirdCollision(bird)
             })
-            this.ups.forEach(up => {
+            this.bubbles.forEach(up => {
                 this.detectBubblesCollision(up)
             })
 
