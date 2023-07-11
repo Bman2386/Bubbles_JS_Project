@@ -46,15 +46,24 @@ export default class Game {
 
         this.gameMusic = new Sound("src/gameFiles/sounds/game.mp3")
         this.bossMusic = new Sound("src/gameFiles/sounds/boss.mp3")
+        
+        this.scoreCount = document.getElementById("score")
 
         this.gameOver = this.gameOver.bind(this)
         this.gameUpdate = this.gameUpdate.bind(this)
         this.restart = this.restart.bind(this)
         this.endGame = this.endGame.bind(this)
         this.mute = this.mute.bind(this)
-        this.scoreCount = document.getElementById("score")
         this.updateScore = this.updateScore.bind(this)
         this.muteDisplay = this.muteDisplay.bind(this)
+        this.deleteItem = this.deleteItem.bind(this)
+        this.clipCollision = this.clipCollision.bind(this)
+        this.birdCollision = this.birdCollision.bind(this)
+        this.poopCollision = this.poopCollision.bind(this)
+        this.bossCollision = this.bossCollision.bind(this)
+        this.bubblesCollision = this.bubblesCollision.bind(this)
+        this.shieldCollision = this.shieldCollision.bind(this)
+        this.detectAnyCollision = this.detectAnyCollision.bind(this)
     }
 
     
@@ -93,48 +102,6 @@ export default class Game {
         }
     }
 
-    detectAnyCollision(item){
-        const itemClass = item.constructor.name
-        const itemTop = ((item.y))
-        const itemBottom = ((item.y + item.height))
-        const itemLeft = ((item.x))
-        const itemRight = ((item.x + item.width))
-
-        const bubbleTop = ((this.bubble.bubbleY))
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight))
-        const bubbleLeft = ((this.bubble.bubbleX))
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
-
-        if ((itemLeft <= bubbleRight && itemRight >= bubbleLeft) &&
-            (itemTop <= bubbleBottom && itemBottom >= bubbleTop)){
-                switch (itemClass) {
-                    case 'Clip':
-                        clipCollision(item)
-                        break
-                    case 'Bird':
-                        birdCollision(item)
-                        break
-                    case 'Boss':
-                        bossCollision(item)
-                        break
-                    case 'Poop':
-                        poopCollision(item)
-                        break
-                    case 'Bubbles':
-                        bubblesCollision(item)
-                        break
-                    case 'Shield':
-                        shieldCollision(item)
-                        break
-                    default:
-                        break;
-                }
-            }
-        if (item.x > 875 || item.y > 500){
-            deleteItem(item)
-        }
-    }
-
     deleteItem(item){
         const className = item.constructor.name
         let idx
@@ -157,6 +124,7 @@ export default class Game {
                 break;
         }
     }
+
     clipCollision(clip) {
         const idx = this.clips.indexOf(clip)
         this.clips.splice(idx, 1)
@@ -170,6 +138,7 @@ export default class Game {
     }
 
     birdCollision(bird) {
+        console.log('bird collision')
         const idx = this.birds.indexOf(bird)
         this.birds.splice(idx, 1)
         this.deadX = bird.x
@@ -237,12 +206,54 @@ export default class Game {
         let birdCurrentXPosition
         let birdCurrentYPosition
         if (this.poopFrame > 15) {
-                birdCurrentXPosition = bird.birdX
-                birdCurrentYPosition = bird.birdY
+                birdCurrentXPosition = bird.x
+                birdCurrentYPosition = bird.y
                 this.poops.push(new Poop)
                 this.poops[this.poops.length - 1].startPosition(birdCurrentXPosition, birdCurrentYPosition)
                 this.poopFrame = 0
             }
+    }
+
+    detectAnyCollision(item){
+        const itemClass = item.constructor.name
+        const itemTop = ((item.y))
+        const itemBottom = ((item.y + item.height))
+        const itemLeft = ((item.x))
+        const itemRight = ((item.x + item.width))
+
+        const bubbleTop = ((this.bubble.bubbleY))
+        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight))
+        const bubbleLeft = ((this.bubble.bubbleX))
+        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+
+        if ((itemLeft <= bubbleRight && itemRight >= bubbleLeft) &&
+            (itemTop <= bubbleBottom && itemBottom >= bubbleTop)){
+                switch (itemClass) {
+                    case 'Clip':
+                        this.clipCollision(item)
+                        break
+                    case 'Bird':
+                        this.birdCollision(item)
+                        break
+                    case 'Boss':
+                        this.bossCollision(item)
+                        break
+                    case 'Poop':
+                        this.poopCollision(item)
+                        break
+                    case 'Bubbles':
+                        this.bubblesCollision(item)
+                        break
+                    case 'Shield':
+                        this.shieldCollision(item)
+                        break
+                    default:
+                        break;
+                }
+            }
+        if (item.x > 875 || item.y > 500){
+            this.deleteItem(item)
+        }
     }
 
     gameUpdate() {
@@ -287,8 +298,8 @@ export default class Game {
                 cloud.drawCloud(this.ctx, this.deadX, this.deadY)
             })
 
-            this.bubbles.forEach(up =>{
-                up.drawBubbles(this.ctx, this.deadX, this.deadY)
+            this.bubbles.forEach(bubble =>{
+                bubble.drawBubbles(this.ctx, this.deadX, this.deadY)
             })
 
             this.shields.forEach(shield =>{

@@ -23,7 +23,7 @@ export default class Poop {
         }
  
         startPosition(birdXPosition, birdYPosition) {
-            this.poopX = birdXPosition
+            this.x = birdXPosition
             this.y = birdYPosition
         }
         fall(){

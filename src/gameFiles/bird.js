@@ -1,6 +1,6 @@
 import birdImg from "./images/bird.jpg"
 
-export default class Enemy {
+export default class Bird {
     constructor(canvasWidth, canvasHeight) {
         const canvas = document.getElementById('myCanvas')
         this.ctx = canvas.getContext("2d")

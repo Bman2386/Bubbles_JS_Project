@@ -1,5 +1,5 @@
 
-export default class Ups {
+export default class Bubbles {
     constructor(canvasWidth, canvasHeight) {
         const canvas = document.getElementById('myCanvas')
         this.ctx = canvas.getContext("2d")

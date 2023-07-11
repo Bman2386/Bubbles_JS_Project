@@ -19,8 +19,8 @@ export default class Bubble {
         this.yDirection = 0
 
         this.score = 0
-        this.sound = new Sound("src/game/sounds/pop.mp3")
-        this.boostSound = new Sound("src/game/sounds/boost.mp3")
+        this.sound = new Sound("src/gameFiles/sounds/pop.mp3")
+        this.boostSound = new Sound("src/gameFiles/sounds/boost.mp3")
         this.mute = false
         this.imgSrc = "./images/bubble.png"
 
