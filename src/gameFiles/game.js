@@ -27,7 +27,7 @@ export default class Game {
         this.deadY
 
         this.bossFrame = 0
-        this.frameC = 0
+        this.cloudFrame = 0
         this.frameP = 0
         this.frameS = 0
         this.frameX = 0
@@ -335,13 +335,13 @@ export default class Game {
             }
 
             if (this.clouds.length > 0) {
-                this.frameC += 1
+                this.cloudFrame += 1
             }
 
-            if (this.frameC > 25) {
+            if (this.cloudFrame > 25) {
                 this.clouds.shift()
                 this.ups.push(new Ups)
-                this.frameC = 0
+                this.cloudFrame = 0
             }
 
             if (this.frameS > 100) {
