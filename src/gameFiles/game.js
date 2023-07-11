@@ -26,7 +26,7 @@ export default class Game {
         this.deadX 
         this.deadY
 
-        this.frameB = 0
+        this.bossFrame = 0
         this.frameC = 0
         this.frameP = 0
         this.frameS = 0
@@ -279,7 +279,7 @@ export default class Game {
             this.bubble.drawBubble(this.ctx)
 
             this.frameS += 1
-            this.frameB += 1
+            this.bossFrame += 1
 
             if (this.soundOn) {
                 this.gameMusic.play()
@@ -325,10 +325,10 @@ export default class Game {
             })
 
 
-            if (this.frameB > 75) {
+            if (this.bossFrame > 75) {
                 this.birds.push(new Bird)
                 this.soundOn ? this.birdSound.play(): null
-                this.frameB = 0
+                this.bossFrame = 0
             }
             if (this.birds.length > 0) {
                 this.frameP += 1
