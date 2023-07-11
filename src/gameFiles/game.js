@@ -29,7 +29,7 @@ export default class Game {
         this.bossFrame = 0
         this.cloudFrame = 0
         this.poopFrame = 0
-        this.frameS = 0
+        this.shieldFrame = 0
         this.frameX = 0
 
         this.playerIsProtected = false
@@ -278,7 +278,7 @@ export default class Game {
             this.bubble.newPos()
             this.bubble.drawBubble(this.ctx)
 
-            this.frameS += 1
+            this.shieldFrame += 1
             this.bossFrame += 1
 
             if (this.soundOn) {
@@ -344,9 +344,9 @@ export default class Game {
                 this.cloudFrame = 0
             }
 
-            if (this.frameS > 100) {
+            if (this.shieldFrame > 100) {
                 this.shields.push(new Shield)
-                this.frameS = 0
+                this.shieldFrame = 0
             }
            
             if (this.frameX > 300) {
