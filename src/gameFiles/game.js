@@ -30,7 +30,7 @@ export default class Game {
         this.cloudFrame = 0
         this.poopFrame = 0
         this.shieldFrame = 0
-        this.frameX = 0
+        this.protectedFrame = 0
 
         this.playerIsProtected = false
         this.win = false
@@ -249,7 +249,7 @@ export default class Game {
             this.bubble.score += 50
             this.shields.shift()
             this.playerIsProtected = true
-            this.frameX = 0
+            this.protectedFrame = 0
             this.soundOn ? this.upsSound.play(): null
         }
         if (shield.shieldY > 500) {
@@ -289,7 +289,7 @@ export default class Game {
             
             
            if (this.playerIsProtected) {
-               this.frameX += 1
+               this.protectedFrame += 1
            }
 
             if (this.bubble.score > 500) {
@@ -349,10 +349,10 @@ export default class Game {
                 this.shieldFrame = 0
             }
            
-            if (this.frameX > 300) {
+            if (this.protectedFrame > 300) {
                 this.playerIsProtected = false
                 this.bubble.bubbleHealth = 2
-                this.frameX = 0
+                this.protectedFrame = 0
             }
 
             this.clips.forEach(clip => {
