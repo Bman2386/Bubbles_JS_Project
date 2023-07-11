@@ -93,170 +93,145 @@ export default class Game {
         }
     }
 
-    detectClipCollision(clip) {
-        const clipTop = ((clip.clipY))
-        const clipBottom = ((clip.clipY + clip.clipHeight))
-        const clipLeft = ((clip.clipX))
-        const clipRight = ((clip.clipX + clip.clipWidth))
+    detectAnyCollision(item){
+        const itemClass = item.constructor.name
+        const itemTop = ((item.y))
+        const itemBottom = ((item.y + item.height))
+        const itemLeft = ((item.x))
+        const itemRight = ((item.x + item.width))
 
         const bubbleTop = ((this.bubble.bubbleY))
         const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight))
         const bubbleLeft = ((this.bubble.bubbleX))
         const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+
+        if ((itemLeft <= bubbleRight && itemRight >= bubbleLeft) &&
+            (itemTop <= bubbleBottom && itemBottom >= bubbleTop)){
+                switch (itemClass) {
+                    case 'Clip':
+                        clipCollision(item)
+                        break
+                    case 'Bird':
+                        birdCollision(item)
+                        break
+                    case 'Boss':
+                        bossCollision(item)
+                        break
+                    case 'Poop':
+                        poopCollision(item)
+                        break
+                    case 'Bubbles':
+                        bubblesCollision(item)
+                        break
+                    case 'Shield':
+                        shieldCollision(item)
+                        break
+                    default:
+                        break;
+                }
+            }
+        if (item.x > 875 || item.y > 500){
+            deleteItem(item)
+        }
+    }
+
+    deleteItem(item){
+        const className = item.constructor.name
+        let idx
+        switch (className) {
+            case 'Bird':
+                idx = this.birds.indexOf(item)
+                this.birds.splice(idx, 1)
+                this.clips.push(new Clip)
+                break
+            case 'Poop':
+                idx = this.poops.indexOf(item)
+                this.poops.splice(idx, 1)
+                this.clips.push(new Clip)
+                break
+            case 'Shield':
+                idx = this.shields.indexOf(item)
+                this.shields.splice(idx, 1)
+                break
+            default:
+                break;
+        }
+    }
+    clipCollision(clip) {
         const idx = this.clips.indexOf(clip)
-
-        if ((clipLeft < bubbleRight && clipRight > bubbleLeft) &&
-        (clipTop < bubbleBottom && clipBottom > bubbleTop)) {
-            this.clips.splice(idx, 1)
-            this.bubble.score += 1
-            if (this.playerIsProtected === false) {
-                this.bubble.bubbleHealth -= 1
-                this.soundOn ? this.bubble.sound.play() : null
+        this.clips.splice(idx, 1)
+        this.bubble.score += 1
+        if (this.playerIsProtected === false) {
+            this.bubble.bubbleHealth -= 1
+            this.soundOn ? this.bubble.sound.play() : null
             } else {
                 this.soundOn ? this.deadSound.play(): null
             }
-        }
     }
 
-    detectBirdCollision(bird) {
-        const birdTop = ((bird.birdY))
-        const birdBottom = ((bird.birdY + bird.birdHeight))
-        const birdLeft = ((bird.birdX))
-        const birdRight = ((bird.birdX + bird.birdWidth))
-
-      
-        const bubbleTop = ((this.bubble.bubbleY + 20))
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight - 20))
-        const bubbleLeft = ((this.bubble.bubbleX + 20))
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth - 20))
+    birdCollision(bird) {
         const idx = this.birds.indexOf(bird)
-
-        if ((birdLeft < bubbleRight && birdRight > bubbleLeft) &&
-        (birdTop < bubbleBottom && birdBottom > bubbleTop)) {
-            this.birds.splice(idx, 1)
-            this.deadX = bird.birdX
-            this.deadY = bird.birdY
-            this.bubble.score += 2
-            this.clouds.push(new Cloud)
-            if (this.playerIsProtected === false) {
-                this.bubble.bubbleHealth -= 1
-                this.soundOn ? this.bubble.sound.play() : null
+        this.birds.splice(idx, 1)
+        this.deadX = bird.x
+        this.deadY = bird.y
+        this.bubble.score += 2
+        this.clouds.push(new Cloud)
+        if (this.playerIsProtected === false) {
+            this.bubble.bubbleHealth -= 1
+            this.soundOn ? this.bubble.sound.play() : null
             } else {
                 this.soundOn ? this.deadSound.play(): null
             }
-        }
-       if (bird.birdX > 875) {
-        this.birds.splice(idx, 1)
-       }
     }
 
-    detectBossCollision(boss) {
-        const bossTop = ((boss.bossY))
-        const bossBottom = ((boss.bossY + boss.bossHeight))
-        const bossLeft = ((boss.bossX))
-        const bossRight = ((boss.bossX + boss.bossWidth))
-
-        
-        const bubbleTop = ((this.bubble.bubbleY + 20))
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight - 20))
-        const bubbleLeft = ((this.bubble.bubbleX + 20))
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth - 20))
-
-        if ((bossLeft < bubbleRight && bossRight > bubbleLeft) &&
-        (bossTop < bubbleBottom && bossBottom > bubbleTop)) {
-            this.soundOn ? this.fartSound.play() : null
-            if (this.playerIsProtected === false) {
-                this.bubble.bubbleHealth -= 1
+    bossCollision(boss) {
+        this.soundOn ? this.fartSound.play() : null
+        if (this.playerIsProtected === false) {
+            this.bubble.bubbleHealth -= 1
             }
-            boss.bossHealth -= 1
-            if (boss.bossHealth < 0) {
-                this.bubble.score += 100
-                this.win = true
+        boss.bossHealth--
+        if (boss.bossHealth <= 0) {
+            this.bubble.score += 100
+            this.win = true
             }
-        }
     }
 
-    detectPoopCollision(poop) {
-        const poopTop = ((poop.poopY))
-        const poopBottom = ((poop.poopY + poop.poopHeight))
-        const poopLeft = ((poop.poopX))
-        const poopRight = ((poop.poopX + poop.poopWidth))
-
-        const bubbleTop = ((this.bubble.bubbleY + 20))
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight - 20))
-        const bubbleLeft = ((this.bubble.bubbleX + 20))
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth - 20))
+    poopCollision(poop) {
         const idx = this.poops.indexOf(poop)
-        
-        if ((poopLeft < bubbleRight && poopRight > bubbleLeft) &&
-        (poopTop < bubbleBottom && poopBottom > bubbleTop)) {
-            this.poops.splice(idx, 1)
-            this.deadX = poop.poopX
-            this.deadY = poop.poopY
-            this.clouds.push(new Cloud)
-            this.bubble.score += 2
+        this.poops.splice(idx, 1)
+        this.deadX = poop.x
+        this.deadY = poop.y
+        this.clouds.push(new Cloud)
+        this.bubble.score += 2
 
-            if (this.playerIsProtected === false) {
-                this.bubble.bubbleHealth -= 1
-                this.soundOn ? this.bubble.sound.play(): null
+        if (this.playerIsProtected === false) {
+            this.bubble.bubbleHealth -= 1
+            this.soundOn ? this.bubble.sound.play(): null
             } else {
                this.soundOn ?  this.deadSound.play(): null
             }
-        }
-       if (poop.poopY > 500) {
-        this.poops.splice(idx, 1)
-           this.clips.push(new Clip)
-       }
     }
 
-    detectBubblesCollision(bubbles){
-        const bubblesTop = ((bubbles.bubblesY))
-        const bubblesBottom = ((bubbles.bubblesY + bubbles.bubblesHeight))
-        const bubblesLeft = ((bubbles.bubblesX))
-        const bubblesRight = ((bubbles.bubblesX + bubbles.bubblesWidth))
-        
-        const bubbleTop = ((this.bubble.bubbleY))
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight))
-        const bubbleLeft = ((this.bubble.bubbleX))
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
-
-        if ((bubblesLeft <= bubbleRight && bubblesRight >= bubbleLeft) &&
-         (bubblesTop <= bubbleBottom && bubblesBottom >= bubbleTop)) {
-
-            this.bubble.score += 5
-            this.bubbles.shift()
-            if(this.playerIsProtected === false)
+    bubblesCollision(bubbles){
+        const idx = this.bubbles.indexOf(bubbles)
+        this.bubbles.splice(idx, 1)
+        this.bubble.score += 5
+        if(this.playerIsProtected === false){
             this.bubble.bubbleHealth = 2
             this.soundOn ? this.bubblesSound.play(): null
         }
     }
 
     
-    detectShieldCollision(shield){
-        const shieldTop = ((shield.shieldY))
-        const shieldBottom = ((shield.shieldY + shield.shieldHeight))
-        const shieldLeft = ((shield.shieldX))
-        const shieldRight = ((shield.shieldX + shield.shieldWidth))
-        
-        const bubbleTop = ((this.bubble.bubbleY))
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight))
-        const bubbleLeft = ((this.bubble.bubbleX))
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
-
-        if ((shieldLeft <= bubbleRight && shieldRight >= bubbleLeft) &&
-         (shieldTop <= bubbleBottom && shieldBottom >= bubbleTop)) {
-            this.bubble.bubbleHealth = 50
-            this.bubble.score += 50
-            this.shields.shift()
-            this.playerIsProtected = true
-            this.protectedFrame = 0
-            this.soundOn ? this.bubblesSound.play(): null
+    shieldCollision(shield){
+        const idx = this.shields.indexOf(shield)
+        this.shields.splice(idx, 1)
+        this.bubble.bubbleHealth = 50
+        this.bubble.score += 50
+        this.playerIsProtected = true
+        this.protectedFrame = 0
+        this.soundOn ? this.bubblesSound.play(): null
         }
-        if (shield.shieldY > 500) {
-            this.shields.shift()
-            
-        }
-    }
 
     pooping(bird) {
         let birdCurrentXPosition
@@ -295,7 +270,7 @@ export default class Game {
             if (this.bubble.score > 500) {
                 this.boss.bossMove()
                 this.boss.drawBoss(this.ctx)
-                this.detectBossCollision(this.boss)
+                this.detectAnyCollision(this.boss)
                 this.gameMusic.stop()
                 this.soundOn ? this.bossMusic.play() : null
             }
@@ -356,21 +331,21 @@ export default class Game {
             }
 
             this.clips.forEach(clip => {
-                this.detectClipCollision(clip)
+                this.detectAnyCollision(clip)
             })
             this.birds.forEach(bird => {
-                this.detectBirdCollision(bird)
+                this.detectAnyCollision(bird)
             })
-            this.bubbles.forEach(up => {
-                this.detectBubblesCollision(up)
+            this.bubbles.forEach(bubble => {
+                this.detectAnyCollision(bubble)
             })
 
             this.shields.forEach(shield => {
-                this.detectShieldCollision(shield)
+                this.detectAnyCollision(shield)
             })
 
             this.poops.forEach(poop => {
-                this.detectPoopCollision(poop)
+                this.detectAnyCollision(poop)
             })
             
             if (this.win) {

@@ -7,10 +7,10 @@ export default class Poop {
             this.canvasWidth = canvasWidth
             this.canvasHeight = canvasHeight
     
-            this.poopHeight = 50
-            this.poopWidth = 50
-            this.poopX 
-            this.poopY 
+            this.height = 50
+            this.width = 50
+            this.x 
+            this.y 
     
             this.poopSrc = './images/poop.jpg'
             this.drawPoop = this.drawPoop.bind(this)
@@ -18,15 +18,15 @@ export default class Poop {
         drawPoop(ctx) {
             const img = new Image()
             img.src = this.poopSrc
-            ctx.drawImage(img, this.poopX, this.poopY, this.poopHeight, this.poopWidth)
+            ctx.drawImage(img, this.x, this.y, this.height, this.width)
             this.fall()
         }
  
         startPosition(birdXPosition, birdYPosition) {
             this.poopX = birdXPosition
-            this.poopY = birdYPosition
+            this.y = birdYPosition
         }
         fall(){
-            this.poopY += 5
+            this.y += 5
         }
 }

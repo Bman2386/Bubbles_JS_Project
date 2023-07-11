@@ -6,11 +6,11 @@ export default class Ups {
         this.canvasWidth = canvasWidth
         this.canvasHeight = canvasHeight
 
-        this.bubblesHeight = 40
-        this.bubblesWidth = 40
+        this.height = 40
+        this.width = 40
 
-        this.bubblesX = 250
-        this.bubblesY = 150
+        this.x = 250
+        this.y = 150
 
         this.drawBubbles = this.drawBubbles.bind(this)
 
@@ -20,12 +20,12 @@ export default class Ups {
     drawBubbles(ctx, deadX, deadY) {
         const img = new Image()
         img.src = this.bubblesSrc
-        ctx.drawImage(img, this.bubblesX, this.bubblesY, this.bubblesHeight, this.bubblesWidth)
+        ctx.drawImage(img, this.x, this.y, this.height, this.width)
         this.move(deadX, deadY)
     }
 
     move(deadX, deadY) {
-        this.bubblesX = deadX
-        this.bubblesY = deadY
+        this.x = deadX
+        this.y = deadY
     }
 }
