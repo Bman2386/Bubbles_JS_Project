@@ -6,11 +6,11 @@ export default class Clip {
         this.canvasWidth = canvasWidth
         this.canvasHeight = canvasHeight
 
-        this.height = 25
-        this.width = 25
+        this.clipHeight = 25
+        this.clipWidth = 25
 
-        this.x = Math.floor(Math.random() * Math.floor(900) )
-        this.y = Math.floor(Math.random() * Math.floor(500) )
+        this.clipX = Math.floor(Math.random() * Math.floor(900) )
+        this.clipY = Math.floor(Math.random() * Math.floor(500) )
 
         this.drawClip = this.drawClip.bind(this)
 
@@ -20,6 +20,6 @@ export default class Clip {
     drawClip(ctx) {
         const img = new Image()
         img.src = this.imgSrc
-        ctx.drawImage(img, this.x, this.y, this.height, this.width)
+        ctx.drawImage(img, this.clipX, this.clipY, this.clipHeight, this.clipWidth)
     }
 }

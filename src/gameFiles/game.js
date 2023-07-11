@@ -102,22 +102,17 @@ export default class Game {
         }
     }
 
-    deleteItem(item){
-        const className = item.constructor.name
-        let idx
-        switch (className) {
+    deleteItem(item, idx){
+        switch (item) {
             case 'Bird':
-                idx = this.birds.indexOf(item)
                 this.birds.splice(idx, 1)
                 this.clips.push(new Clip)
                 break
             case 'Poop':
-                idx = this.poops.indexOf(item)
                 this.poops.splice(idx, 1)
                 this.clips.push(new Clip)
                 break
             case 'Shield':
-                idx = this.shields.indexOf(item)
                 this.shields.splice(idx, 1)
                 break
             default:
@@ -125,8 +120,7 @@ export default class Game {
         }
     }
 
-    clipCollision(clip) {
-        const idx = this.clips.indexOf(clip)
+    clipCollision(idx) {
         this.clips.splice(idx, 1)
         this.bubble.score += 1
         if (this.playerIsProtected === false) {
@@ -137,12 +131,10 @@ export default class Game {
             }
     }
 
-    birdCollision(bird) {
-        console.log('bird collision')
-        const idx = this.birds.indexOf(bird)
+    birdCollision(idx, birdX, birdY) {
         this.birds.splice(idx, 1)
-        this.deadX = bird.x
-        this.deadY = bird.y
+        this.deadX = birdX
+        this.deadY = birdY
         this.bubble.score += 2
         this.clouds.push(new Cloud)
         if (this.playerIsProtected === false) {
@@ -153,23 +145,22 @@ export default class Game {
             }
     }
 
-    bossCollision(boss) {
+    bossCollision() {
         this.soundOn ? this.fartSound.play() : null
         if (this.playerIsProtected === false) {
             this.bubble.bubbleHealth -= 1
             }
-        boss.bossHealth--
-        if (boss.bossHealth <= 0) {
+        this.boss.bossHealth--
+        if (this.boss.bossHealth <= 0) {
             this.bubble.score += 100
             this.win = true
             }
     }
 
-    poopCollision(poop) {
-        const idx = this.poops.indexOf(poop)
+    poopCollision(idx, poopX, poopY) {
         this.poops.splice(idx, 1)
-        this.deadX = poop.x
-        this.deadY = poop.y
+        this.deadX = poopX
+        this.deadY = poopY
         this.clouds.push(new Cloud)
         this.bubble.score += 2
 
@@ -181,8 +172,7 @@ export default class Game {
             }
     }
 
-    bubblesCollision(bubbles){
-        const idx = this.bubbles.indexOf(bubbles)
+    bubblesCollision(idx){
         this.bubbles.splice(idx, 1)
         this.bubble.score += 5
         if(this.playerIsProtected === false){
@@ -192,8 +182,7 @@ export default class Game {
     }
 
     
-    shieldCollision(shield){
-        const idx = this.shields.indexOf(shield)
+    shieldCollision(idx){
         this.shields.splice(idx, 1)
         this.bubble.bubbleHealth = 50
         this.bubble.score += 50
@@ -203,57 +192,29 @@ export default class Game {
         }
 
     pooping(bird) {
-        let birdCurrentXPosition
-        let birdCurrentYPosition
         if (this.poopFrame > 15) {
-                birdCurrentXPosition = bird.x
-                birdCurrentYPosition = bird.y
                 this.poops.push(new Poop)
-                this.poops[this.poops.length - 1].startPosition(birdCurrentXPosition, birdCurrentYPosition)
+                this.poops[this.poops.length - 1].startPosition(bird.birdX, bird.birdY)
                 this.poopFrame = 0
             }
     }
 
-    detectAnyCollision(item){
-        const itemClass = item.constructor.name
-        const itemTop = ((item.y))
-        const itemBottom = ((item.y + item.height))
-        const itemLeft = ((item.x))
-        const itemRight = ((item.x + item.width))
+    detectAnyCollision(itemX, itemY, itemHeight, itemWidth){
+        const itemTop = itemY
+        const itemBottom = itemY + itemHeight
+        const itemLeft = itemX
+        const itemRight = itemX + itemWidth
 
-        const bubbleTop = ((this.bubble.bubbleY))
-        const bubbleBottom = ((this.bubble.bubbleY + this.bubble.bubbleHeight))
-        const bubbleLeft = ((this.bubble.bubbleX))
-        const bubbleRight = ((this.bubble.bubbleX + this.bubble.bubbleWidth))
+        const bubbleTop = this.bubble.bubbleY
+        const bubbleBottom = this.bubble.bubbleY + this.bubble.bubbleHeight
+        const bubbleLeft = this.bubble.bubbleX
+        const bubbleRight = this.bubble.bubbleX + this.bubble.bubbleWidth
 
         if ((itemLeft <= bubbleRight && itemRight >= bubbleLeft) &&
             (itemTop <= bubbleBottom && itemBottom >= bubbleTop)){
-                switch (itemClass) {
-                    case 'Clip':
-                        this.clipCollision(item)
-                        break
-                    case 'Bird':
-                        this.birdCollision(item)
-                        break
-                    case 'Boss':
-                        this.bossCollision(item)
-                        break
-                    case 'Poop':
-                        this.poopCollision(item)
-                        break
-                    case 'Bubbles':
-                        this.bubblesCollision(item)
-                        break
-                    case 'Shield':
-                        this.shieldCollision(item)
-                        break
-                    default:
-                        break;
-                }
+                return true
             }
-        if (item.x > 875 || item.y > 500){
-            this.deleteItem(item)
-        }
+        return false
     }
 
     gameUpdate() {
@@ -281,9 +242,11 @@ export default class Game {
             if (this.bubble.score > 500) {
                 this.boss.bossMove()
                 this.boss.drawBoss(this.ctx)
-                this.detectAnyCollision(this.boss)
                 this.gameMusic.stop()
                 this.soundOn ? this.bossMusic.play() : null
+                if (this.detectAnyCollision(this.boss.bossX, this.boss.bossY, this.boss.bossHeight, this.boss.bossWidth)){
+                    this.bossCollision()
+                }
             }
 
             this.clips.forEach(clip => {
@@ -341,22 +304,42 @@ export default class Game {
                 this.protectedFrame = 0
             }
 
-            this.clips.forEach(clip => {
-                this.detectAnyCollision(clip)
+            this.clips.forEach((clip, idx) => {
+                if (this.detectAnyCollision(clip.clipX, clip.clipY, clip.clipHeight, clip.clipWidth)){
+                    this.clipCollision(idx)
+                }
             })
-            this.birds.forEach(bird => {
-                this.detectAnyCollision(bird)
+            this.birds.forEach((bird, idx) => {
+                if (bird.birdX > 875){
+                    this.deleteItem('Bird', idx)
+                } 
+                if (this.detectAnyCollision( bird.birdX, bird.birdY, bird.birdHeight, bird.birdWidth)){
+                this.birdCollision(idx, bird.birdX, bird.birdY)
+              }
             })
-            this.bubbles.forEach(bubble => {
-                this.detectAnyCollision(bubble)
+            this.bubbles.forEach((bubble, idx) => {
+              if (this.detectAnyCollision( bubble.bubblesX, bubble.bubblesY, bubble.bubblesHeight, bubble.bubblesWidth)){
+                this.bubblesCollision(idx)
+              }
             })
 
-            this.shields.forEach(shield => {
-                this.detectAnyCollision(shield)
+            this.shields.forEach((shield, idx) => {
+                if (shield.shieldY > 500){
+                    this.deleteItem('Shield', idx)
+                } 
+               if (this.detectAnyCollision(shield.shieldX, shield.shieldY, shield.shieldHeight, shield.shieldWidth)){
+                console.log('collision')
+                this.shieldCollision(idx)
+               }
             })
 
-            this.poops.forEach(poop => {
-                this.detectAnyCollision(poop)
+            this.poops.forEach((poop, idx) => {
+                if (poop.poopY > 500){
+                    this.deleteItem('Poop', idx)
+                }
+              if (this.detectAnyCollision( poop.poopX, poop.poopY, poop.poopHeight, poop.poopWidth)){
+                this.poopCollision(idx, poop.poopX, poop.poopY)
+              }
             })
             
             if (this.win) {

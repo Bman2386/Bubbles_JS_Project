@@ -7,11 +7,11 @@ export default class Shield {
         this.canvasWidth = canvasWidth
         this.canvasHeight = canvasHeight
 
-        this.width = 50
-        this.height = 50
+        this.shieldWidth = 50
+        this.shieldHeight = 50
 
-        this.x = Math.floor(Math.random() * Math.floor(800))
-        this.y = 0
+        this.shieldX = Math.floor(Math.random() * Math.floor(800))
+        this.shieldY = 0
 
         this.drawShield = this.drawShield.bind(this)
 
@@ -21,11 +21,11 @@ export default class Shield {
     drawShield(ctx) {
         const img = new Image()
         img.src = this.imgSrc
-        ctx.drawImage(img, this.x, this.y, this.height, this.width)
+        ctx.drawImage(img, this.shieldX, this.shieldY, this.shieldHeight, this.shieldWidth)
         this.fall()
     }
 
     fall() {
-        this.y += 3
+        this.shieldY += 3
     }
 }

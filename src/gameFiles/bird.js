@@ -7,11 +7,11 @@ export default class Bird {
         this.canvasWidth = canvasWidth
         this.canvasHeight = canvasHeight
         
-        this.height = 75
-        this.width = 75
+        this.birdHeight = 75
+        this.birdWidth = 75
         
-        this.y = Math.floor(Math.random() * Math.floor(200))
-        this.x = 0
+        this.birdY = Math.floor(Math.random() * Math.floor(200))
+        this.birdX = 0
         
         this.drawBird = this.drawBird.bind(this)
        
@@ -22,7 +22,7 @@ export default class Bird {
         const img = new Image()
         const moveBirdAccrossScreen = 7
         img.src = birdImg
-        ctx.drawImage(img, this.x, this.y, this.width, this.height)
-        this.x += moveBirdAccrossScreen
+        ctx.drawImage(img, this.birdX, this.birdY, this.birdWidth, this.birdHeight)
+        this.birdX += moveBirdAccrossScreen
     }
 }
